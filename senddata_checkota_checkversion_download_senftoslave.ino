@@ -4,6 +4,7 @@
 #include <HTTPClient.h>
 #include <SPIFFS.h>
 #include <ArduinoJson.h>
+#include "esp_task_wdt.h"  // For watchdog resets
 
 #define FIRMWARE_FILE_PATH "/firmware.bin"  // Save firmware in SPIFFS
 #define DOWNLOAD_TIMEOUT 30000              // 15 seconds timeout
@@ -27,6 +28,7 @@ typedef struct {
 typedef struct{
    char serverversion[10] ; // Buffer to store received OTA version
    char slaveversion[10] ;  //store version of slave
+   char firmwareUrl[128];
    uint8_t slaveAddress[6];  //update a microcontroller
 } updatemac;
 
@@ -48,11 +50,12 @@ bool inloop=true ;  // maitain ota state
 updatemac Otarun ;
 const char* ssid = "FTTH";
 const char* password = "12345678";
-const char* otaUrl = "http://172.25.2.156:3000/firmwareuse";
-const char* serverUrl = "http://172.25.2.156:3000";
-const char *mongoDBEndpoint = "http://172.25.2.156:3000/sensor-data-batch";
+const char* serverUrl = "http://172.25.2.129:3001";  
+const char* otaUrl = "http://172.25.2.129:3001/firmwareuse";
+const char *mongoDBEndpoint = "http://172.25.2.129:3001/sensor-data-batch";
 bool sending=false ;
-
+bool pair=false ;
+bool slave_version_send=false ;
 
 bool sendMessage(const uint8_t *mac_addr, const uint8_t *message, size_t messageLength) {
     memcpy(ackData.slaveAddress, mac_addr, 6);
@@ -73,7 +76,12 @@ bool sendMessage(const uint8_t *mac_addr, const uint8_t *message, size_t message
 }
 
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t sendStatus) {
-    Serial.println(sendStatus == ESP_NOW_SEND_SUCCESS ? "Packet sent successfully" : "Failed to send packet");
+    if(sendStatus == ESP_NOW_SEND_SUCCESS)
+     {
+        Serial.println("Packet sent successfully") ;
+        slave_version_send=true ;
+     }
+     else Serial.println("Failed to send packet") ;
 }
 
 // ESP-NOW Receive Callback
@@ -206,16 +214,26 @@ bool setupespnow() {
 }
 
 bool wificonnect() {
-    esp_now=false ;
+    WiFi.disconnect(true);  // Reset WiFi
+    delay(200);
+    WiFi.mode(WIFI_STA);    // Station mode
     WiFi.begin(ssid, password);
-    int i = 0;
-    while (WiFi.status() != WL_CONNECTED && i <= 20) {
+    
+    Serial.print("Connecting to WiFi");
+    unsigned long startTime = millis();
+    while (WiFi.status() != WL_CONNECTED && millis() - startTime < 10000) { // 10s timeout
         delay(500);
         Serial.print(".");
-        i++;
     }
-    Serial.println();
-    return WiFi.status() == WL_CONNECTED;
+    
+    if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("\n✅ WiFi Connected! IP: " + WiFi.localIP().toString());
+        esp_now=false ;
+        return true;
+    } else {
+        Serial.println("\n❌ WiFi Failed! Status: " + String(WiFi.status()));
+        return false;
+    }
 }
 
 bool checkForOTAUpdate() {
@@ -223,8 +241,8 @@ bool checkForOTAUpdate() {
 
     WiFiClient client;
     HTTPClient http;
-    http.end() ;
-    delay(200) ;
+    http.end();
+    delay(200);
     Serial.println("Checking OTA Request...");
 
     const char* labNumber = "Lab102";
@@ -232,7 +250,7 @@ bool checkForOTAUpdate() {
     
     if (!http.begin(client, requestUrl)) {
         Serial.println("Failed to connect to server.");
-        client.stop();  // Explicitly stop WiFiClient
+        client.stop();
         return false;
     }
 
@@ -240,7 +258,7 @@ bool checkForOTAUpdate() {
     if (httpCode != HTTP_CODE_OK) {
         Serial.printf("HTTP Request failed. Code: %d\n", httpCode);
         http.end();
-        client.stop();  // Stop WiFiClient before returning
+        client.stop();
         return false;
     }
 
@@ -254,12 +272,13 @@ bool checkForOTAUpdate() {
 
     Serial.println("Server Response: " + payload);
 
-    // Increase buffer size for JSON parsing
+    // Increased buffer size for JSON parsing
     StaticJsonDocument<512> doc;
     DeserializationError error = deserializeJson(doc, payload);
 
     if (error) {
-        Serial.println("JSON Parse Error!");
+        Serial.print("JSON Parse Error: ");
+        Serial.println(error.c_str());
         http.end();
         client.stop();
         return false;
@@ -272,10 +291,18 @@ bool checkForOTAUpdate() {
         return false;
     }
 
-    String serverOtaVersion = doc["ota"].as<String>();
-    // Extract MAC address from JSON string
+    // Extract version from response
+    String serverVersion = doc["version"].as<String>();
+    if (serverVersion.length() == 0) {
+        Serial.println("Invalid version in response");
+        http.end();
+        client.stop();
+        return false;
+    }
+
+    // Extract MAC address
     String macStr = doc["mac"].as<String>();
-    if (macStr.length() == 17) {  // MAC addresses are always 17 characters (XX:XX:XX:XX:XX:XX)
+    if (macStr.length() == 17) {  // MAC addresses are 17 characters (XX:XX:XX:XX:XX:XX)
         int values[6];
         if (sscanf(macStr.c_str(), "%x:%x:%x:%x:%x:%x", 
                   &values[0], &values[1], &values[2], 
@@ -283,7 +310,6 @@ bool checkForOTAUpdate() {
             for (int i = 0; i < 6; i++) {
                 Otarun.slaveAddress[i] = (uint8_t)values[i];
             }
-
             Serial.print("Received MAC Address: ");
             for (int i = 0; i < 6; i++) {
                 Serial.printf("0x%X ", Otarun.slaveAddress[i]);
@@ -302,20 +328,35 @@ bool checkForOTAUpdate() {
         return false;
     }
 
+    // Extract firmware URL
+    String firmwareUrl = doc["firmwareUrl"].as<String>();
+    if (firmwareUrl.length() == 0) {
+        Serial.println("No firmware URL in response");
+        http.end();
+        client.stop();
+        return false;
+    }
 
-    strncpy(Otarun.serverversion, serverOtaVersion.c_str(), sizeof(Otarun.serverversion) - 1);
+    // Store version and URL
+    strncpy(Otarun.serverversion, serverVersion.c_str(), sizeof(Otarun.serverversion) - 1);
     Otarun.serverversion[sizeof(Otarun.serverversion) - 1] = '\0';
+    strncpy(Otarun.firmwareUrl, firmwareUrl.c_str(), sizeof(Otarun.firmwareUrl) - 1);
+    Otarun.firmwareUrl[sizeof(Otarun.firmwareUrl) - 1] = '\0';
+    memset(Otarun.slaveversion, 0, sizeof(Otarun.slaveversion));
 
     Serial.print("Stored OTA Version: ");
     Serial.println(Otarun.serverversion);
+    Serial.print("Firmware URL: ");
+    Serial.println(Otarun.firmwareUrl);
 
     http.end();
-    client.stop();  // Stop WiFiClient before returning
-    return (Otarun.serverversion[0] != '\0');  
+    client.stop();
+    return true;
 }
 
 bool setupESPNowpair(uint8_t PairAddress[]) { 
     esp_now = true ;
+    pair=true ;
     WiFi.disconnect(true);
     WiFi.mode(WIFI_OFF);
     delay(1000);
@@ -341,54 +382,65 @@ bool setupESPNowpair(uint8_t PairAddress[]) {
     }
 }
 
-bool checkversion() 
-  {   
+bool checkversion() {   
     if (!setupESPNowpair(Otarun.slaveAddress)) return false;
-    // Send OTA version to slave
+
     const char* message = "checkversion";
-    esp_err_t result = esp_now_send(Otarun.slaveAddress, (uint8_t*)message, strlen(message) + 1);
-    if (result != ESP_OK) {
-        Serial.println("Error: Failed to send OTA version.");
+    slave_version_send = false;  // Reset before sending
+
+    if (esp_now_send(Otarun.slaveAddress, (uint8_t*)message, strlen(message) + 1) != ESP_OK) {
+        Serial.println("Failed to send version check message");
         return false;
     }
 
-    // Wait for slave response
-    bool sver=false ;
-      unsigned long startTime = millis();
-      while (millis() - startTime < 2000) { // Wait max 2 seconds 
-        delay(100);
+    // Wait for send to complete (up to 200ms)
+    unsigned long sendStart = millis();
+    while (!slave_version_send && millis() - sendStart < 200) {
+        delay(20);
+    }
 
-        // Check if Otarun.slaveversion is updated (e.g., not empty or contains valid data)
+    if (!slave_version_send) {
+        Serial.println("Send callback not triggered in time.");
+    }
+
+    // Wait for slave version response
+    bool sver = false;
+    unsigned long startTime = millis();
+    while (millis() - startTime < 2000) {
+        delay(100);
         if (Otarun.slaveversion[0] != '\0') {
-            sver=true ;
-            break;  // Exit the loop if data is received
+            sver = true;
+            break;
         }
     }
-    
-    if(!sver) 
-    {  
-      Serial.printf("slave version not recived") ;
-       return false ;
+
+    if (!sver) {
+        Serial.println("Slave version not received");
+        return false;
     }
+
     Serial.printf("Master OTA Version: %s\n", Otarun.serverversion);
     Serial.printf("Slave Reported Version: %s\n", Otarun.slaveversion);
-    
-    if (strcmp(Otarun.serverversion, Otarun.slaveversion) != 0) {  
-      Serial.println("Version mismatch: Slave needs update.");
-       return true;
+
+    if (strcmp(Otarun.serverversion, Otarun.slaveversion) != 0) {
+        Serial.println("Version mismatch: Slave needs update.");
+        return true;
     }
+
     Serial.println("Versions match: No update needed.");
     return false;
 }
 
+
 bool downloadFirmware() {
     Serial.println("Starting firmware download...");
+    
     if (!SPIFFS.begin(true)) {
         Serial.println("Failed to mount SPIFFS.");
         return false;
     }
 
-    // ✅ Clear old firmware file
+    // Clear old firmware file
     if (SPIFFS.exists(FIRMWARE_FILE_PATH)) {
         Serial.println("Clearing previous firmware file...");
         SPIFFS.remove(FIRMWARE_FILE_PATH);
@@ -396,133 +448,266 @@ bool downloadFirmware() {
 
     HTTPClient http;
     WiFiClient client;
-    http.end();
-    delay(200);
-    http.begin(client, otaUrl);
-    int httpCode = http.GET();
+    
+    // Construct full URL - ensure it's properly encoded
+    String fullUrl = String(serverUrl) + "/firmware/" + Otarun.firmwareUrl;
+    Serial.print("Downloading from: ");
+    Serial.println(fullUrl);
 
-    if (httpCode != HTTP_CODE_OK) {
-        Serial.printf("Firmware download failed. HTTP Code: %d\n", httpCode);
+    // Add retry logic
+    int retryCount = 0;
+    const int maxRetries = 3;
+    
+    while (retryCount < maxRetries) {
         http.end();
-        return false;
-    }
+        delay(200);
+        
+        if (!http.begin(client, fullUrl)) {
+            Serial.println("Failed to begin HTTP connection");
+            retryCount++;
+            delay(1000);
+            continue;
+        }
 
-    int firmwareSize = http.getSize();
-    Serial.printf("Firmware size: %d bytes\n", firmwareSize);
+        // Add some headers if needed
+        http.addHeader("Accept", "application/octet-stream");
+        
+        int httpCode = http.GET();
+        if (httpCode != HTTP_CODE_OK) {
+            Serial.printf("HTTP error: %d (attempt %d/%d)\n", httpCode, retryCount+1, maxRetries);
+            http.end();
+            retryCount++;
+            delay(1000);
+            continue;
+        }
 
-    if (firmwareSize <= 0) {
-        Serial.println("Error: Invalid firmware size.");
-        http.end();
-        return false;
-    }
+        // Get file size
+        int firmwareSize = http.getSize();
+        if (firmwareSize <= 0) {
+            Serial.println("Invalid content length");
+            http.end();
+            retryCount++;
+            delay(1000);
+            continue;
+        }
+        Serial.printf("Firmware size: %d bytes\n", firmwareSize);
 
-    // ✅ Open new file after clearing the old one
-    File firmwareFile = SPIFFS.open(FIRMWARE_FILE_PATH, FILE_WRITE);
-    if (!firmwareFile) {
-        Serial.println("Error opening firmware file.");
-        http.end();
-        return false;
-    }
-
-    WiFiClient *stream = http.getStreamPtr();
-    size_t bytesRead = 0;
-    unsigned long startTime = millis();
-
-    while (http.connected() && bytesRead < firmwareSize) {
-        if (millis() - startTime > DOWNLOAD_TIMEOUT) {
-            Serial.println("Error: Download timeout.");
-            firmwareFile.close();
+        // Open file for writing
+        File firmwareFile = SPIFFS.open(FIRMWARE_FILE_PATH, FILE_WRITE);
+        if (!firmwareFile) {
+            Serial.println("Failed to create firmware file");
             http.end();
             return false;
         }
 
-        if (stream->available()) {
-            uint8_t buffer[CHUNK_SIZE];
-            size_t len = stream->readBytes(buffer, CHUNK_SIZE);
-            firmwareFile.write(buffer, len);
-            bytesRead += len;
-            Serial.printf("Downloaded %d/%d bytes...\n", bytesRead, firmwareSize);
+        // Get stream pointer
+        WiFiClient *stream = http.getStreamPtr();
+
+        // Download with progress
+        size_t bytesRead = 0;
+        unsigned long startTime = millis();
+        uint8_t buffer[1024]; // Larger buffer for better performance
+
+        while (http.connected() && bytesRead < firmwareSize) {
+            if (millis() - startTime > DOWNLOAD_TIMEOUT) {
+                Serial.println("Download timeout");
+                firmwareFile.close();
+                http.end();
+                retryCount++;
+                delay(1000);
+                break;
+            }
+
+            size_t available = stream->available();
+            if (available > 0) {
+                size_t readSize = stream->readBytes(buffer, min(available, sizeof(buffer)));
+                size_t written = firmwareFile.write(buffer, readSize);
+                bytesRead += written;
+                
+                // Print progress every 10%
+                static int lastPercent = -1;
+                int percent = (bytesRead * 100) / firmwareSize;
+                if (percent != lastPercent && percent % 10 == 0) {
+                    Serial.printf("Downloaded %d%% (%d/%d bytes)\n", percent, bytesRead, firmwareSize);
+                    lastPercent = percent;
+                }
+            }
+            delay(1);
         }
-        delay(10);
+
+        firmwareFile.close();
+        http.end();
+
+        if (bytesRead == firmwareSize) {
+            Serial.println("Download completed successfully");
+            return true;
+        } else {
+            Serial.printf("Download incomplete: %d/%d bytes\n", bytesRead, firmwareSize);
+            SPIFFS.remove(FIRMWARE_FILE_PATH);
+            retryCount++;
+            delay(1000);
+        }
     }
 
-    firmwareFile.close();
-    Serial.printf("Firmware downloaded successfully (%d bytes)\n", bytesRead);
-    http.end();
-    return (bytesRead == firmwareSize);
+    Serial.println("Max retries reached, download failed");
+    return false;
 }
 
-void sendFirmwareToSlave() {
+bool sendFirmwareToSlave() {
     Serial.println("Starting firmware transfer via ESP-NOW...");
-     if (!setupESPNowpair(Otarun.slaveAddress)) return ;
+
+    if (!setupESPNowpair(Otarun.slaveAddress)) return false;
+
     File firmwareFile = SPIFFS.open(FIRMWARE_FILE_PATH, "r");
     if (!firmwareFile) {
         Serial.println("Error: Failed to open firmware file.");
-        return;
+        return false;
     }
 
     size_t firmwareSize = firmwareFile.size();
     size_t totalPackets = (firmwareSize + CHUNK_SIZE - 1) / CHUNK_SIZE;
     Serial.printf("Firmware size: %d bytes, Total packets: %d\n", firmwareSize, totalPackets);
 
+    // Send metadata: magic header + firmware size + total packets
     uint8_t metadata[12];
-    uint32_t magicHeader = 0xABCD1234;  // Unique identifier
-   memcpy(metadata, &magicHeader, 4);  // Add magic header
-   memcpy(metadata + 4, &firmwareSize, 4);  
-   memcpy(metadata + 8, &totalPackets, 4);  
+    uint32_t magicHeader = 0xABCD1234;
+    memcpy(metadata, &magicHeader, 4);
+    memcpy(metadata + 4, &firmwareSize, 4);
+    memcpy(metadata + 8, &totalPackets, 4);
 
     if (!sendMessage(Otarun.slaveAddress, metadata, sizeof(metadata))) {
         Serial.println("Error: Failed to send firmware metadata.");
         firmwareFile.close();
-        return;
+        return false;
     }
 
     size_t i = 0;
     while (i < totalPackets) {
+        esp_task_wdt_reset();  // Reset watchdog if enabled
+
         uint8_t packet[CHUNK_SIZE + 4];
-        memcpy(packet, &i, 4);
+        memcpy(packet, &i, 4);  // First 4 bytes = packet index
 
         firmwareFile.seek(i * CHUNK_SIZE);
         size_t readBytes = firmwareFile.read(packet + 4, CHUNK_SIZE);
-        if (readBytes == 0) break;
+        if (readBytes == 0) {
+            Serial.printf("Error: Read failed at packet %d\n", i);
+            break;
+        }
 
-        Serial.printf("Sending packet %d, size: %d\n", i, readBytes);
+        Serial.printf("Sending packet %d, size: %d, Free heap: %d bytes\n", i, readBytes, ESP.getFreeHeap());
 
         int retryCount = 0;
         bool success = false;
 
-        while (retryCount < 2) {  // Retry up to 2 times
+        while (retryCount < 2) {
             if (sendMessage(Otarun.slaveAddress, packet, readBytes + 4)) {
                 success = true;
                 break;
             } else {
                 Serial.printf("Retrying packet %d... (%d)\n", i, retryCount + 1);
                 retryCount++;
-                delay(50);
+                delay(100);  // Increased delay on retry
             }
         }
 
         if (!success) {
             Serial.printf("Error: Failed to send firmware packet %d after retries.\n", i);
             firmwareFile.close();
-            return;
+            return false;
         }
 
-        i++;  
-        delay(50);
+        i++;
+        delay(100);  // Increased delay between packets to reduce pressure
     }
 
     firmwareFile.close();
 
-    Serial.println("Firmware transfer complete. Sending termination signal...");
+   
     uint32_t endSignal = 0xFFFFFFFF;
-    esp_now_send(Otarun.slaveAddress, (uint8_t*)&endSignal, 4);
+    esp_now_send(Otarun.slaveAddress, (uint8_t*)&endSignal, sizeof(endSignal));
+    Serial.println("Firmware transfer complete. Sending termination signal...");
+    return true ;
+
 }
 
+void removeAllESPNOWPeers() {
+    esp_now_peer_num_t peerNum;
+    esp_err_t result = esp_now_get_peer_num(&peerNum);
+
+    if (result != ESP_OK) {
+        Serial.println("Failed to get peer count.");
+        return;
+    }
+
+    int peerCount = peerNum.total_num;  // Get the total number of peers
+
+    if (peerCount == 0) {
+        Serial.println("No ESP-NOW peers found.");
+        pair=false ;
+        return;
+    }
+
+    Serial.printf("Removing %d ESP-NOW peers...\n", peerCount);
+
+    esp_now_peer_info_t peerList[ESP_NOW_MAX_TOTAL_PEER_NUM];
+
+    for (int i = 0; i < peerCount; i++) {
+        esp_now_del_peer(peerList[i].peer_addr);
+    }
+
+    Serial.println("All ESP-NOW peers removed.");
+    pair=false ;
+    return ;
+
+}
+
+bool sendversionserver() {
+    if (!wificonnect()) {
+        Serial.println("Failed to connect to WiFi for version update");
+        return false;
+    }
+
+    WiFiClient client;
+    HTTPClient http;
+    http.end();
+    delay(200);
+
+    // Create JSON payload
+    DynamicJsonDocument doc(256);
+    doc["mac"] = String(Otarun.slaveAddress[0], HEX) + ":" + 
+                 String(Otarun.slaveAddress[1], HEX) + ":" + 
+                 String(Otarun.slaveAddress[2], HEX) + ":" + 
+                 String(Otarun.slaveAddress[3], HEX) + ":" + 
+                 String(Otarun.slaveAddress[4], HEX) + ":" + 
+                 String(Otarun.slaveAddress[5], HEX);
+    doc["version"] = Otarun.serverversion;
+    doc["status"] = "completed";
+    doc["lab"] = "Lab102"; // Replace with your lab number or make it dynamic
+
+    String jsonPayload;
+    serializeJson(doc, jsonPayload);
+
+    String url = String(serverUrl) + "/update-ota-status";
+    http.begin(client, url);
+    http.addHeader("Content-Type", "application/json");
+
+    int httpCode = http.POST(jsonPayload);
+    if (httpCode == HTTP_CODE_OK) {
+        String payload = http.getString();
+        Serial.println("Server response: " + payload);
+        http.end();
+        return true;
+    } else {
+        Serial.printf("Failed to update OTA status. HTTP Code: %d\n", httpCode);
+        http.end();
+        return false;
+    }
+}
 
 void setup() {
     Serial.begin(115200);
-
+    pinMode(2, INPUT_PULLUP);
     if (SPIFFS.begin(true)) {
         Serial.println("SPIFFS Initialized.");
     } else {
@@ -574,11 +759,21 @@ void loop() {
         if (downloadFirmware()) {
             //sendFirmwareToSlave();
             Serial.println("file is downloaded");
+            int i=0 ;
+            while(i<4)
+            {
             sending=true ;
-            sendFirmwareToSlave();
+            if(sendFirmwareToSlave())
+            {
+                delay(15000) ;
+                break ;
+            }
+            delay(100) ;
             sending=false ;
-            //checkversion() ;
-            //sendversionserver() ;
+            i++ ;
+            }
+            delay(500) ;
+            if(!checkversion())  sendversionserver() ;
         }
         else {
           Serial.println("its is not updated") ;
@@ -606,5 +801,10 @@ void loop() {
 
     if(!esp_now&&setupespnow()) esp_now=true ;  //set all time in espnow mode
     
+    delay(500) ;
+
+    if(pair) removeAllESPNOWPeers() ;  // remove pairs
+
+
     delay(500) ;
 }
