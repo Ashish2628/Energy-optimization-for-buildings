@@ -1,1 +1,1 @@
-# Power-optimization-for-building
+# Energy-optimization-for-building
