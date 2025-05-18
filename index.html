@@ -1,0 +1,2599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Optimization Project - Complete Documentation</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --background-color: #f9f9f9;
+            --card-color: #ffffff;
+            --text-color: #333333;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--dark-color), #1a252f);
+            color: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2.5rem;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+        
+        h1 {
+            margin: 0 0 0.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin: 3rem 0 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            margin: 2rem 0 1rem;
+            font-size: 1.4rem;
+        }
+        
+        h4 {
+            color: var(--dark-color);
+            margin: 1.5rem 0 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .section {
+            background-color: var(--card-color);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 2.5rem;
+            transition: var(--transition);
+        }
+        
+        .section:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+        
+        code {
+            background-color: #f5f5f5;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #d63384;
+        }
+        
+        pre {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            overflow-x: auto;
+            tab-size: 4;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 1.5rem 0;
+            position: relative;
+            max-height: 500px;
+            overflow-y: auto;
+            transition: max-height 0.3s ease;
+        }
+        
+        pre.collapsed {
+            max-height: 150px;
+            overflow-y: hidden;
+        }
+        
+        .code-container {
+            position: relative;
+        }
+        
+        .code-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .code-slider {
+            width: 100%;
+            margin: 10px 0;
+            -webkit-appearance: none;
+            height: 8px;
+            background: #ddd;
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .code-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .code-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+        
+        .note {
+            background-color: #fffde7;
+            border-left: 4px solid #ffd600;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .warning {
+            background-color: #ffebee;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .connection-diagram {
+            background-color: #f5f5f5;
+            padding: 1.2rem;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #27ae60;
+        }
+        
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .device-card {
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            background-color: var(--card-color);
+            transition: var(--transition);
+        }
+        
+        .device-card:hover {
+            border-color: var(--primary-color);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+        }
+        
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .icon {
+            width: 16px;
+            height: 16px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            header {
+                padding: 1.5rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            pre {
+                padding: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Energy Optimization For Buliding</h1>
+        <p>Complete Documentation for ESP32 Master and ESP8266 Slave Devices</p>
+    </header>
+    
+    <div class="section">
+        <h2>Project Overview</h2>
+        <p>This project implements an energy optimization system using ESP32 and ESP8266 microcontrollers with various sensors to monitor or detect energy loss and optimize energy usage in a building or home environment.</p>
+        
+        <p>The system consists of:</p>
+        <ul>
+            <li>An ESP32 master device that coordinates the system</li>
+            <li>Multiple ESP8266 slave devices with different sensors</li>
+            <li>Communication via ESP-NOW protocol</li>
+            <li>Various sensors for monitoring different aspects of energy usage</li>
+        </ul>
+    </div>
+    <!-- system Architecture -->
+    <div class="section">
+        <h2>System Architecture</h2>
+        <p>The system consists of 1 ESP32 master controller and 4 ESP8266 slave nodes with different sensors:</p>
+        <ul>
+            <li><strong>Master Controller:</strong> ESP32 (Coordinates all devices)</li>
+            <li><strong>Slave Nodes:</strong>
+                <ol>
+                    <li>ESP8266 with LDR and DHT22 (Environment monitoring)</li>
+                    <li>ESP8266 with ACS712 (Current monitoring)</li>
+                    <li>ESP8266 with PIR (Motion detection)</li>
+                    <li>ESP8266 with Door/Window sensors (Open/close detection)</li>
+                </ol>
+            </li>
+        </ul>
+        <p>All devices communicate via ESP-NOW protocol for low-latency communication.</p>
+    </div>
+    <!-- installation and setup -->
+    <div class="section">
+        <h2>Installation and Setup</h2>
+        
+        <h3>Required Libraries</h3>
+        <p>Before uploading code to your devices, you need to install the following libraries through the Arduino Library Manager:</p>
+        
+        <table>
+            <tr>
+                <th>Library</th>
+                <th>Installation Method</th>
+                <th>Required For</th>
+            </tr>
+            <tr>
+                <td>ESP8266WiFi</td>
+                <td>Built-in with ESP8266 Board Package</td>
+                <td>All ESP8266 devices</td>
+            </tr>
+            <tr>
+                <td>ESP32WiFi</td>
+                <td>Built-in with ESP32 Board Package</td>
+                <td>ESP32 master</td>
+            </tr>
+            <tr>
+                <td>espnow.h / esp_now.h</td>
+                <td>Built-in with ESP boards</td>
+                <td>All devices for ESP-NOW communication</td>
+            </tr>
+            <tr>
+                <td>FS.h / SPIFFS.h</td>
+                <td>Built-in with ESP boards</td>
+                <td>All devices for filesystem operations</td>
+            </tr>
+            <tr>
+                <td>Updater.h</td>
+                <td>Built-in with ESP boards</td>
+                <td>All devices for OTA updates</td>
+            </tr>
+            <tr>
+                <td>ACS712</td>
+                <td>Install from Library Manager</td>
+                <td>Current sensing ESP8266</td>
+            </tr>
+            <tr>
+                <td>DHT sensor library</td>
+                <td>Install from Library Manager</td>
+                <td>Temperature/Humidity ESP8266</td>
+            </tr>
+            <tr>
+                <td>ArduinoJson</td>
+                <td>Install from Library Manager</td>
+                <td>ESP32 master for JSON handling</td>
+            </tr>
+            <tr>
+                <td>WiFiClientSecure</td>
+                <td>Built-in with ESP boards</td>
+                <td>ESP32 master for secure connections</td>
+            </tr>
+            <tr>
+                <td>HTTPClient</td>
+                <td>Built-in with ESP boards</td>
+                <td>ESP32 master for HTTP requests</td>
+            </tr>
+        </table>
+        
+        <div class="note">
+            <p><strong>Note:</strong> To install libraries from the Arduino IDE, go to <code>Sketch > Include Library > Manage Libraries</code> and search for the library names.</p>
+        </div>
+        
+        <h3>Board Setup</h3>
+        <p>Before uploading code, you need to install the board support packages:</p>
+        
+        <ol>
+            <li>Open Arduino IDE</li>
+            <li>Go to <code>File > Preferences</code></li>
+            <li>Add the following URLs to "Additional Boards Manager URLs":
+                <ul>
+                    <li>For ESP8266: <code>http://arduino.esp8266.com/stable/package_esp8266com_index.json</code></li>
+                    <li>For ESP32: <code>https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</code></li>
+                </ul>
+            </li>
+            <li>Go to <code>Tools > Board > Boards Manager</code></li>
+            <li>Search for "esp8266" and install the package</li>
+            <li>Search for "esp32" and install the package</li>
+        </ol>
+    </div>
+
+    <!-- Master Device Section -->
+    <div class="section">
+        <h2>1. ESP32 Master Controller</h2>
+        <div class="device-card">
+            <h3>Master Device Responsibilities</h3>
+            <ul>
+                <li>Coordinates communication between all slave devices</li>
+                <li>Aggregates sensor data</li>
+                <li>Manages OTA updates</li>
+                <li>Sends data to cloud server</li>
+                <li>Handles WiFi and ESP-NOW communication</li>
+                <li>Manages firmware updates for slave devices</li>
+            </ul>
+
+            <h4>Key Features</h4>
+            <ul>
+                <li>ESP-NOW communication with slave devices</li>
+                <li>Batch data collection and transmission</li>
+                <li>Secure OTA firmware updates</li>
+                <li>Watchdog timer support</li>
+                <li>SPIFFS for firmware storage</li>
+            </ul>
+
+            <div class="code-header">
+                <h4>Master Device Code</h4>
+            </div>
+            <div class="code-container">
+                <div class="code-controls">
+                    <button class="btn btn-secondary toggle-code" onclick="toggleCode('master-code')">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                        <span class="toggle-text">Expand</span>
+                    </button>
+                    <button class="btn" onclick="copyToClipboard('master-code')">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy
+                    </button>
+                </div>
+                <input type="range" min="0" max="100" value="0" class="code-slider" id="master-code-slider" oninput="scrollCode('master-code', this.value)">
+                <pre id="master-code" class="collapsed">#include &lt;WiFi.h&gt;
+#include &lt;esp_now.h&gt;
+#include &lt;WiFiClientSecure.h&gt;
+#include &lt;HTTPClient.h&gt;
+#include &lt;SPIFFS.h&gt;
+#include &lt;ArduinoJson.h&gt;
+#include "esp_task_wdt.h"  // For watchdog resets
+
+#define FIRMWARE_FILE_PATH "/firmware.bin"  // Save firmware in SPIFFS
+#define DOWNLOAD_TIMEOUT 30000              // 15 seconds timeout
+#define CHUNK_SIZE 240                       // ESP-NOW packet size limit
+#define WINDOW_SIZE 4                        // Number of packets sent before waiting for ACK
+#define BATCH_SIZE 5
+
+// Acknowledge structure
+typedef struct {
+    uint8_t slaveAddress[6];
+    bool ack = false;
+} Acknowledge;
+
+typedef struct {
+    char sensorType[10];
+    int numValues;
+    float values[2];
+    char sensorID[20];
+} SensorData;
+
+typedef struct{
+   char serverversion[10] ; // Buffer to store received OTA version
+   char slaveversion[10] ;  //store version of slave
+   char firmwareUrl[128];
+   uint8_t slaveAddress[6];  //update a microcontroller
+} updatemac;
+
+typedef struct {
+    uint8_t slaveAddress[6];
+    bool ack;
+} ackData_t;
+
+ackData_t ackData;
+SensorData receivedData;
+bool batchReady = false ;  // when batch will send
+DynamicJsonDocument doc(4096);
+JsonArray batchArray = doc.to&lt;JsonArray&gt;();  // JSON array for batch storage
+int batchCount = 0; // Track the number of received packets
+bool esp_now=true  ;// by default its true to maitain sattus of es32
+unsigned long previousMillis = 0;  // Stores the last execution time
+const unsigned long interval = 30000;  // how much later check ota requesrt from server
+bool inloop=true ;  // maitain ota state 
+updatemac Otarun ;
+const char* ssid = "FTTH";
+const char* password = "12345678";
+const char* serverUrl = "http://172.25.2.129:3001";  
+const char* otaUrl = "http://172.25.2.129:3001/firmwareuse";
+const char *mongoDBEndpoint = "http://172.25.2.129:3001/sensor-data-batch";
+bool sending=false ;
+bool pair=false ;
+bool slave_version_send=false ;
+
+bool sendMessage(const uint8_t *mac_addr, const uint8_t *message, size_t messageLength) {
+    memcpy(ackData.slaveAddress, mac_addr, 6);
+    ackData.ack = false;
+
+    if (esp_now_send(mac_addr, message, messageLength) != ESP_OK) {
+        Serial.println("Error: Failed to send ESP-NOW message.");
+        return false;
+    }
+
+    unsigned long startTime = millis();
+    while (millis() - startTime &lt; 500) { // Wait up to 500ms for ACK
+        if (ackData.ack) return true;
+        delay(10);
+    }
+
+    return false; // Timeout, return failure
+}
+
+void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t sendStatus) {
+    if(sendStatus == ESP_NOW_SEND_SUCCESS)
+     {
+        Serial.println("Packet sent successfully") ;
+        slave_version_send=true ;
+     }
+     else Serial.println("Failed to send packet") ;
+}
+
+// ESP-NOW Receive Callback
+void onDataRecv(const esp_now_recv_info_t *info, const uint8_t *data, int len) {
+      if(sending)
+      {   if(memcmp(ackData.slaveAddress, info-&gt;src_addr, 6) == 0)
+          { ackData.ack=true ; }
+          return ;
+      }
+      if (len != sizeof(receivedData)&amp;&amp;len!=sizeof(Otarun.slaveversion)) 
+      {
+        Serial.println("Invalid data size received.");
+        return;
+      }
+      if(len==sizeof(Otarun.slaveversion))
+      {
+          if(memcmp(Otarun.slaveAddress, info-&gt;src_addr, 6) != 0) return ;
+          memcpy(Otarun.slaveversion, data, sizeof(Otarun.slaveversion));  // Copy data to slaveversion
+          Serial.printf("Received firmware version: %s\n", Otarun.slaveversion);
+      }
+      else
+      {
+        memcpy(&amp;receivedData, data, sizeof(receivedData));
+        
+          char macStr[18];
+          //add mac address of sender microcontroller
+          snprintf(macStr, sizeof(macStr), "%02X:%02X:%02X:%02X:%02X:%02X",
+                  info-&gt;src_addr[0], info-&gt;src_addr[1], info-&gt;src_addr[2],
+                  info-&gt;src_addr[3], info-&gt;src_addr[4], info-&gt;src_addr[5]);
+
+          // Display received data on Serial Monitor 📺
+          Serial.println("=====================================");
+          Serial.printf("Sensor ID: %s\n", receivedData.sensorID);
+          Serial.printf("Sensor Type: %s\n", receivedData.sensorType);
+          Serial.printf("MAC Address: %s\n", macStr);
+          Serial.print("Values: ");
+          for (int i = 0; i &lt; receivedData.numValues; i++) {
+            Serial.printf("Value %d: [%.2f] ", i + 1, receivedData.values[i]);
+          }
+          Serial.println("\n=====================================");
+
+          // Create new JSON object inside the batch array
+          JsonObject sensorData = batchArray.createNestedObject();
+          sensorData["sensorId"] = receivedData.sensorID;
+          sensorData["sensorType"] = receivedData.sensorType;
+          sensorData["macAddress"] = macStr; // Store MAC as a string
+
+          // Add values as an array
+          JsonArray valuesArray = sensorData.createNestedArray("values");
+          for (int i = 0; i &lt; receivedData.numValues; i++) {
+              valuesArray.add(receivedData.values[i]);
+          }
+
+          batchCount++; // Increment batch count
+
+          if (batchCount == BATCH_SIZE) {
+            batchReady = true; // Set flag when batch is ready
+        }
+      }
+}
+
+bool sendmessage(const uint8_t *mac_addr, const uint8_t *message, size_t messageLength) {
+    memcpy(ackData.slaveAddress, mac_addr, 6);  // Store MAC address
+    ackData.ack = false;  // Reset acknowledgment status
+
+    // Send the message via ESP-NOW
+    if (esp_now_send(mac_addr, message, messageLength) != ESP_OK) {
+        Serial.println("Error: Failed to send ESP-NOW message.");
+        return false;
+    }
+
+    // Wait for acknowledgment
+    unsigned long startTime = millis();
+    while (millis() - startTime &lt; 500) { // Wait up to 500ms for ACK
+        if (ackData.ack) return true;
+        delay(10);  // Small delay to avoid CPU overload
+    }
+
+    return false; // If timeout, return false
+}
+
+bool sendBatchToDatabase() {
+    if (!wificonnect()) 
+    {
+      doc.clear();
+      batchArray = doc.to&lt;JsonArray&gt;(); 
+      batchCount = 0 ;
+      batchReady = false;
+      return false ;
+    }
+    bool ans=false ;
+    HTTPClient http;
+    http.end() ;
+    delay(200) ;
+    http.begin(mongoDBEndpoint);
+    http.addHeader("Content-Type", "application/json");
+
+    String jsonPayload;
+    serializeJson(doc, jsonPayload); // Convert JSON array to string
+
+    Serial.println("Sending JSON batch:");
+    Serial.println(jsonPayload);
+
+    int httpResponseCode = http.POST(jsonPayload);
+    if (httpResponseCode == HTTP_CODE_OK) {
+        ans=true ;
+    } else {
+        Serial.printf("Batch send failed. HTTP Code: %d\n", httpResponseCode);
+    }
+    http.end();
+    doc.clear();
+    batchArray = doc.to&lt;JsonArray&gt;(); 
+    batchCount = 0 ;
+    batchReady = false;
+    return ans ;
+}
+
+bool setupespnow() {  
+    esp_now=true ;
+    WiFi.disconnect(true);
+    WiFi.mode(WIFI_OFF);
+    delay(1000);
+    WiFi.mode(WIFI_STA);
+    if (esp_now_init() != ESP_OK) {
+        Serial.println("ESP-NOW Initialization Failed!");
+        return false;
+    }
+    esp_now_register_send_cb(OnDataSent);
+    esp_now_register_recv_cb(onDataRecv);
+    return true;
+}
+
+bool wificonnect() {
+    WiFi.disconnect(true);  // Reset WiFi
+    delay(200);
+    WiFi.mode(WIFI_STA);    // Station mode
+    WiFi.begin(ssid, password);
+    
+    Serial.print("Connecting to WiFi");
+    unsigned long startTime = millis();
+    while (WiFi.status() != WL_CONNECTED &amp;&amp; millis() - startTime &lt; 10000) { // 10s timeout
+        delay(500);
+        Serial.print(".");
+    }
+    
+    if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("\n✅ WiFi Connected! IP: " + WiFi.localIP().toString());
+        esp_now=false ;
+        return true;
+    } else {
+        Serial.println("\n❌ WiFi Failed! Status: " + String(WiFi.status()));
+        return false;
+    }
+}
+
+bool checkForOTAUpdate() {
+    if (!wificonnect()) return false;
+
+    WiFiClient client;
+    HTTPClient http;
+    http.end();
+    delay(200);
+    Serial.println("Checking OTA Request...");
+
+    const char* labNumber = "Lab102";
+    String requestUrl = String(serverUrl) + "/getData?lab=" + String(labNumber);
+    
+    if (!http.begin(client, requestUrl)) {
+        Serial.println("Failed to connect to server.");
+        client.stop();
+        return false;
+    }
+
+    int httpCode = http.GET();
+    if (httpCode != HTTP_CODE_OK) {
+        Serial.printf("HTTP Request failed. Code: %d\n", httpCode);
+        http.end();
+        client.stop();
+        return false;
+    }
+
+    String payload = http.getString();
+    if (payload.length() == 0) {
+        Serial.println("Empty response from server!");
+        http.end();
+        client.stop();
+        return false;
+    }
+
+    Serial.println("Server Response: " + payload);
+
+    // Increased buffer size for JSON parsing
+    StaticJsonDocument&lt;512&gt; doc;
+    DeserializationError error = deserializeJson(doc, payload);
+
+    if (error) {
+        Serial.print("JSON Parse Error: ");
+        Serial.println(error.c_str());
+        http.end();
+        client.stop();
+        return false;
+    }
+
+    if (doc.containsKey("error")) {
+        Serial.println("No OTA update available.");
+        http.end();
+        client.stop();
+        return false;
+    }
+
+    // Extract version from response
+    String serverVersion = doc["version"].as&lt;String&gt;();
+    if (serverVersion.length() == 0) {
+        Serial.println("Invalid version in response");
+        http.end();
+        client.stop();
+        return false;
+    }
+
+    // Extract MAC address
+    String macStr = doc["mac"].as&lt;String&gt;();
+    if (macStr.length() == 17) {  // MAC addresses are 17 characters (XX:XX:XX:XX:XX:XX)
+        int values[6];
+        if (sscanf(macStr.c_str(), "%x:%x:%x:%x:%x:%x", 
+                  &amp;values[0], &amp;values[1], &amp;values[2], 
+                  &amp;values[3], &amp;values[4], &amp;values[5]) == 6) {
+            for (int i = 0; i &lt; 6; i++) {
+                Otarun.slaveAddress[i] = (uint8_t)values[i];
+            }
+            Serial.print("Received MAC Address: ");
+            for (int i = 0; i &lt; 6; i++) {
+                Serial.printf("0x%X ", Otarun.slaveAddress[i]);
+            }
+            Serial.println();
+        } else {
+            Serial.println("Failed to parse MAC Address!");
+            http.end();
+            client.stop();
+            return false;
+        }
+    } else {
+        Serial.println("Invalid MAC Address length.");
+        http.end();
+        client.stop();
+        return false;
+    }
+
+    // Extract firmware URL
+    String firmwareUrl = doc["firmwareUrl"].as&lt;String&gt;();
+    if (firmwareUrl.length() == 0) {
+        Serial.println("No firmware URL in response");
+        http.end();
+        client.stop();
+        return false;
+    }
+
+    // Store version and URL
+    strncpy(Otarun.serverversion, serverVersion.c_str(), sizeof(Otarun.serverversion) - 1);
+    Otarun.serverversion[sizeof(Otarun.serverversion) - 1] = '\0';
+    strncpy(Otarun.firmwareUrl, firmwareUrl.c_str(), sizeof(Otarun.firmwareUrl) - 1);
+    Otarun.firmwareUrl[sizeof(Otarun.firmwareUrl) - 1] = '\0';
+    memset(Otarun.slaveversion, 0, sizeof(Otarun.slaveversion));
+
+    Serial.print("Stored OTA Version: ");
+    Serial.println(Otarun.serverversion);
+    Serial.print("Firmware URL: ");
+    Serial.println(Otarun.firmwareUrl);
+
+    http.end();
+    client.stop();
+    return true;
+}
+
+bool setupESPNowpair(uint8_t PairAddress[]) { 
+    esp_now = true ;
+    pair=true ;
+    WiFi.disconnect(true);
+    WiFi.mode(WIFI_OFF);
+    delay(1000);
+    WiFi.mode(WIFI_STA);
+    if (esp_now_init() != ESP_OK) {
+        Serial.println("ESP-NOW Initialization Failed!");
+        return false;
+    }
+    esp_now_register_send_cb(OnDataSent);
+    esp_now_register_recv_cb(onDataRecv);
+
+    esp_now_peer_info_t peerInfo = {};
+    memcpy(peerInfo.peer_addr, PairAddress, 6);
+    peerInfo.channel = 0;
+    peerInfo.encrypt = false;
+
+    if (esp_now_add_peer(&amp;peerInfo) == ESP_OK) {
+        Serial.println("ESP-NOW Peer added.");
+        return true;
+    } else {
+        Serial.println("Failed to add ESP-NOW peer.");
+        return false;
+    }
+}
+
+bool checkversion() {   
+    if (!setupESPNowpair(Otarun.slaveAddress)) return false;
+
+    const char* message = "checkversion";
+    slave_version_send = false;  // Reset before sending
+
+    if (esp_now_send(Otarun.slaveAddress, (uint8_t*)message, strlen(message) + 1) != ESP_OK) {
+        Serial.println("Failed to send version check message");
+        return false;
+    }
+
+    // Wait for send to complete (up to 200ms)
+    unsigned long sendStart = millis();
+    while (!slave_version_send &amp;&amp; millis() - sendStart &lt; 200) {
+        delay(20);
+    }
+
+    if (!slave_version_send) {
+        Serial.println("Send callback not triggered in time.");
+    }
+
+    // Wait for slave version response
+    bool sver = false;
+    unsigned long startTime = millis();
+    while (millis() - startTime &lt; 2000) {
+        delay(100);
+        if (Otarun.slaveversion[0] != '\0') {
+            sver = true;
+            break;
+        }
+    }
+
+    if (!sver) {
+        Serial.println("Slave version not received");
+        return false;
+    }
+
+    Serial.printf("Master OTA Version: %s\n", Otarun.serverversion);
+    Serial.printf("Slave Reported Version: %s\n", Otarun.slaveversion);
+
+    if (strcmp(Otarun.serverversion, Otarun.slaveversion) != 0) {
+        Serial.println("Version mismatch: Slave needs update.");
+        return true;
+    }
+
+    Serial.println("Versions match: No update needed.");
+    return false;
+}
+
+
+bool downloadFirmware() {
+    Serial.println("Starting firmware download...");
+    
+    if (!SPIFFS.begin(true)) {
+        Serial.println("Failed to mount SPIFFS.");
+        return false;
+    }
+
+    // Clear old firmware file
+    if (SPIFFS.exists(FIRMWARE_FILE_PATH)) {
+        Serial.println("Clearing previous firmware file...");
+        SPIFFS.remove(FIRMWARE_FILE_PATH);
+    }
+
+    HTTPClient http;
+    WiFiClient client;
+    
+    // Construct full URL - ensure it's properly encoded
+    String fullUrl = String(serverUrl) + "/firmware/" + Otarun.firmwareUrl;
+    Serial.print("Downloading from: ");
+    Serial.println(fullUrl);
+
+    // Add retry logic
+    int retryCount = 0;
+    const int maxRetries = 3;
+    
+    while (retryCount &lt; maxRetries) {
+        http.end();
+        delay(200);
+        
+        if (!http.begin(client, fullUrl)) {
+            Serial.println("Failed to begin HTTP connection");
+            retryCount++;
+            delay(1000);
+            continue;
+        }
+
+        // Add some headers if needed
+        http.addHeader("Accept", "application/octet-stream");
+        
+        int httpCode = http.GET();
+        if (httpCode != HTTP_CODE_OK) {
+            Serial.printf("HTTP error: %d (attempt %d/%d)\n", httpCode, retryCount+1, maxRetries);
+            http.end();
+            retryCount++;
+            delay(1000);
+            continue;
+        }
+
+        // Get file size
+        int firmwareSize = http.getSize();
+        if (firmwareSize &lt;= 0) {
+            Serial.println("Invalid content length");
+            http.end();
+            retryCount++;
+            delay(1000);
+            continue;
+        }
+        Serial.printf("Firmware size: %d bytes\n", firmwareSize);
+
+        // Open file for writing
+        File firmwareFile = SPIFFS.open(FIRMWARE_FILE_PATH, FILE_WRITE);
+        if (!firmwareFile) {
+            Serial.println("Failed to create firmware file");
+            http.end();
+            return false;
+        }
+
+        // Get stream pointer
+        WiFiClient *stream = http.getStreamPtr();
+
+        // Download with progress
+        size_t bytesRead = 0;
+        unsigned long startTime = millis();
+        uint8_t buffer[1024]; // Larger buffer for better performance
+
+        while (http.connected() &amp;&amp; bytesRead &lt; firmwareSize) {
+            if (millis() - startTime &gt; DOWNLOAD_TIMEOUT) {
+                Serial.println("Download timeout");
+                firmwareFile.close();
+                http.end();
+                retryCount++;
+                delay(1000);
+                break;
+            }
+
+            size_t available = stream-&gt;available();
+            if (available &gt; 0) {
+                size_t readSize = stream-&gt;readBytes(buffer, min(available, sizeof(buffer)));
+                size_t written = firmwareFile.write(buffer, readSize);
+                bytesRead += written;
+                
+                // Print progress every 10%
+                static int lastPercent = -1;
+                int percent = (bytesRead * 100) / firmwareSize;
+                if (percent != lastPercent &amp;&amp; percent % 10 == 0) {
+                    Serial.printf("Downloaded %d%% (%d/%d bytes)\n", percent, bytesRead, firmwareSize);
+                    lastPercent = percent;
+                }
+            }
+            delay(1);
+        }
+
+        firmwareFile.close();
+        http.end();
+
+        if (bytesRead == firmwareSize) {
+            Serial.println("Download completed successfully");
+            return true;
+        } else {
+            Serial.printf("Download incomplete: %d/%d bytes\n", bytesRead, firmwareSize);
+            SPIFFS.remove(FIRMWARE_FILE_PATH);
+            retryCount++;
+            delay(1000);
+        }
+    }
+
+    Serial.println("Max retries reached, download failed");
+    return false;
+}
+
+bool sendFirmwareToSlave() {
+    Serial.println("Starting firmware transfer via ESP-NOW...");
+
+    if (!setupESPNowpair(Otarun.slaveAddress)) return false;
+
+    File firmwareFile = SPIFFS.open(FIRMWARE_FILE_PATH, "r");
+    if (!firmwareFile) {
+        Serial.println("Error: Failed to open firmware file.");
+        return false;
+    }
+
+    size_t firmwareSize = firmwareFile.size();
+    size_t totalPackets = (firmwareSize + CHUNK_SIZE - 1) / CHUNK_SIZE;
+    Serial.printf("Firmware size: %d bytes, Total packets: %d\n", firmwareSize, totalPackets);
+
+    // Send metadata: magic header + firmware size + total packets
+    uint8_t metadata[12];
+    uint32_t magicHeader = 0xABCD1234;
+    memcpy(metadata, &amp;magicHeader, 4);
+    memcpy(metadata + 4, &amp;firmwareSize, 4);
+    memcpy(metadata + 8, &amp;totalPackets, 4);
+
+    if (!sendMessage(Otarun.slaveAddress, metadata, sizeof(metadata))) {
+        Serial.println("Error: Failed to send firmware metadata.");
+        firmwareFile.close();
+        return false;
+    }
+
+    size_t i = 0;
+    while (i &lt; totalPackets) {
+        esp_task_wdt_reset();  // Reset watchdog if enabled
+
+        uint8_t packet[CHUNK_SIZE + 4];
+        memcpy(packet, &amp;i, 4);  // First 4 bytes = packet index
+
+        firmwareFile.seek(i * CHUNK_SIZE);
+        size_t readBytes = firmwareFile.read(packet + 4, CHUNK_SIZE);
+        if (readBytes == 0) {
+            Serial.printf("Error: Read failed at packet %d\n", i);
+            break;
+        }
+
+        Serial.printf("Sending packet %d, size: %d, Free heap: %d bytes\n", i, readBytes, ESP.getFreeHeap());
+
+        int retryCount = 0;
+        bool success = false;
+
+        while (retryCount &lt; 2) {
+            if (sendMessage(Otarun.slaveAddress, packet, readBytes + 4)) {
+                success = true;
+                break;
+            } else {
+                Serial.printf("Retrying packet %d... (%d)\n", i, retryCount + 1);
+                retryCount++;
+                delay(100);  // Increased delay on retry
+            }
+        }
+
+        if (!success) {
+            Serial.printf("Error: Failed to send firmware packet %d after retries.\n", i);
+            firmwareFile.close();
+            return false;
+        }
+
+        i++;
+        delay(100);  // Increased delay between packets to reduce pressure
+    }
+
+    firmwareFile.close();
+
+   
+    uint32_t endSignal = 0xFFFFFFFF;
+    esp_now_send(Otarun.slaveAddress, (uint8_t*)&amp;endSignal, sizeof(endSignal));
+    Serial.println("Firmware transfer complete. Sending termination signal...");
+    return true ;
+
+}
+
+void removeAllESPNOWPeers() {
+    esp_now_peer_num_t peerNum;
+    esp_err_t result = esp_now_get_peer_num(&amp;peerNum);
+
+    if (result != ESP_OK) {
+        Serial.println("Failed to get peer count.");
+        return;
+    }
+
+    int peerCount = peerNum.total_num;  // Get the total number of peers
+
+    if (peerCount == 0) {
+        Serial.println("No ESP-NOW peers found.");
+        pair=false ;
+        return;
+    }
+
+    Serial.printf("Removing %d ESP-NOW peers...\n", peerCount);
+
+    esp_now_peer_info_t peerList[ESP_NOW_MAX_TOTAL_PEER_NUM];
+
+    for (int i = 0; i &lt; peerCount; i++) {
+        esp_now_del_peer(peerList[i].peer_addr);
+    }
+
+    Serial.println("All ESP-NOW peers removed.");
+    pair=false ;
+    return ;
+
+}
+
+bool sendversionserver() {
+    if (!wificonnect()) {
+        Serial.println("Failed to connect to WiFi for version update");
+        return false;
+    }
+
+    WiFiClient client;
+    HTTPClient http;
+    http.end();
+    delay(200);
+
+    // Create JSON payload
+    DynamicJsonDocument doc(256);
+    doc["mac"] = String(Otarun.slaveAddress[0], HEX) + ":" + 
+                 String(Otarun.slaveAddress[1], HEX) + ":" + 
+                 String(Otarun.slaveAddress[2], HEX) + ":" + 
+                 String(Otarun.slaveAddress[3], HEX) + ":" + 
+                 String(Otarun.slaveAddress[4], HEX) + ":" + 
+                 String(Otarun.slaveAddress[5], HEX);
+    doc["version"] = Otarun.serverversion;
+    doc["status"] = "completed";
+    doc["lab"] = "Lab102"; // Replace with your lab number or make it dynamic
+
+    String jsonPayload;
+    serializeJson(doc, jsonPayload);
+
+    String url = String(serverUrl) + "/update-ota-status";
+    http.begin(client, url);
+    http.addHeader("Content-Type", "application/json");
+
+    int httpCode = http.POST(jsonPayload);
+    if (httpCode == HTTP_CODE_OK) {
+        String payload = http.getString();
+        Serial.println("Server response: " + payload);
+        http.end();
+        return true;
+    } else {
+        Serial.printf("Failed to update OTA status. HTTP Code: %d\n", httpCode);
+        http.end();
+        return false;
+    }
+}
+
+void setup() {
+    Serial.begin(115200);
+    pinMode(2, INPUT_PULLUP);
+    if (SPIFFS.begin(true)) {
+        Serial.println("SPIFFS Initialized.");
+    } else {
+        Serial.println("SPIFFS Initialization Failed!");
+    }
+
+    if (wificonnect()) {
+        Serial.println("WiFi Setup Done.");
+    } else {
+        Serial.println("WiFi Setup Failed!");
+    }
+
+    if (setupespnow()) {
+        Serial.println("ESP-NOW Setup Done.");
+    } else {
+        Serial.println("ESP-NOW Setup Failed!");
+    }
+}
+
+void loop() {
+    delay(500);
+
+    if(batchReady&amp;&amp;sendBatchToDatabase())   //send data to server
+    {
+        Serial.println("Batch sent successfully.");
+    }
+
+    delay(500) ;
+
+    if(!esp_now&amp;&amp;setupespnow()) esp_now=true ;  //set all time in espnow mode
+
+    delay(500) ;
+
+    unsigned long currentMillis = millis();
+
+    if (currentMillis - previousMillis &gt;= interval) 
+    {
+        previousMillis = currentMillis; // Update previousMillis correctly
+        inloop = true;
+    }
+    else 
+    {
+        inloop = false;
+    }
+
+    if (inloop &amp;&amp; checkForOTAUpdate()&amp;&amp;checkversion()&amp;&amp;wificonnect()) 
+    {
+       Serial.println("OTA Update Requested!");
+        if (downloadFirmware()) {
+            //sendFirmwareToSlave();
+            Serial.println("file is downloaded");
+            int i=0 ;
+            while(i&lt;4)
+            {
+            sending=true ;
+            if(sendFirmwareToSlave())
+            {
+                delay(15000) ;
+                break ;
+            }
+            delay(100) ;
+            sending=false ;
+            i++ ;
+            }
+            delay(500) ;
+            if(!checkversion())  sendversionserver() ;
+        }
+        else {
+          Serial.println("its is not updated") ;
+        }
+
+        if (SPIFFS.exists(FIRMWARE_FILE_PATH)) 
+        {
+          if (SPIFFS.remove(FIRMWARE_FILE_PATH))
+          {
+            Serial.println("Firmware file deleted successfully.");
+          } 
+          else 
+          {
+            Serial.println("Error: Failed to delete firmware file.");
+          } 
+        } 
+        else 
+        {
+         Serial.println("Firmware file does not exist.");
+        }
+        delay(1000) ;
+    }
+
+    delay(500) ;
+
+    if(!esp_now&amp;&amp;setupespnow()) esp_now=true ;  //set all time in espnow mode
+    
+    delay(500) ;
+
+    if(pair) removeAllESPNOWPeers() ;  // remove pairs
+
+
+    delay(500) ;
+}</pre>
+            </div>
+
+            <h4>Master Device Connections</h4>
+            <div class="connection-diagram">
+ESP32 Pinout:
+- GPIO2: Built-in LED (for status indication)
+- No sensors connected directly to master
+- GPIOs available for expansion
+- 3.3V and GND for power if needed
+            </div>
+
+            <h4>Key Functionalities</h4>
+            <ul>
+                <li><strong>Data Collection:</strong> Receives sensor data from ESP8266 slaves via ESP-NOW</li>
+                <li><strong>Batch Processing:</strong> Collects data in batches (5 readings by default) before sending to server</li>
+                <li><strong>OTA Updates:</strong> Checks for firmware updates and manages the update process</li>
+                <li><strong>WiFi Management:</strong> Handles WiFi connections for server communication</li>
+                <li><strong>Error Handling:</strong> Includes retry logic for failed operations</li>
+            </ul>
+
+            <h4>Configuration</h4>
+            <table>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Default Value</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>BATCH_SIZE</td>
+                    <td>5</td>
+                    <td>Number of sensor readings to collect before sending to server</td>
+                </tr>
+                <tr>
+                    <td>CHUNK_SIZE</td>
+                    <td>240</td>
+                    <td>Size of firmware chunks for OTA updates</td>
+                </tr>
+                <tr>
+                    <td>DOWNLOAD_TIMEOUT</td>
+                    <td>30000 (30s)</td>
+                    <td>Timeout for firmware downloads</td>
+                </tr>
+                <tr>
+                    <td>serverUrl</td>
+                    <td>http://172.25.2.129:3001</td>
+                    <td>Base URL for server communication</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+  <!-- LDR and DHT22 Slave -->
+<div class="section">
+    <h2>2. ESP8266 with LDR and DHT22</h2>
+    <div class="device-card">
+        <h3>Environment Monitoring Node</h3>
+        <p>Measures ambient light and temperature/humidity with OTA update capability.</p>
+
+        <h4>Key Features</h4>
+        <ul>
+            <li>DHT22 temperature and humidity sensor</li>
+            <li>LDR (Light Dependent Resistor) for ambient light measurement</li>
+            <li>ESP-NOW communication with master</li>
+            <li>Secure OTA firmware updates</li>
+            <li>SPIFFS for firmware storage</li>
+            <li>Automatic sensor data transmission</li>
+        </ul>
+
+        <div class="code-header">
+            <h4>LDR/DHT22 Code</h4>
+        </div>
+        <div class="code-container">
+            <div class="code-controls">
+                <button class="btn btn-secondary toggle-code" onclick="toggleCode('ldr-dht-code')">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                    <span class="toggle-text">Expand</span>
+                </button>
+                <button class="btn" onclick="copyToClipboard('ldr-dht-code')">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copy
+                </button>
+            </div>
+            <input type="range" min="0" max="100" value="0" class="code-slider" id="ldr-dht-code-slider" oninput="scrollCode('ldr-dht-code', this.value)">
+            <pre id="ldr-dht-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
+#include &lt;espnow.h&gt;
+#include &lt;FS.h&gt;
+#include &lt;Updater.h&gt;
+
+#include "DHT.h"
+#define FIRMWARE_FILE "/firmware.bin"
+#define CHUNK_SIZE 240  // ESP-NOW max payload size
+#define DHTPIN D4
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+int ldrPin = A0;
+
+size_t firmwareSize = 0; 
+size_t totalPackets = 0;
+size_t receivedPackets = 0;
+bool updateReady = false;
+File firmwareFile;
+char FIRMWARE_VERSION[10] = "1.0.0";  //current version
+uint8_t ackMessage = 1;  // Simple ACK response
+uint8_t masterAddress[] = {0x24, 0xDC, 0xC3, 0xAE, 0x8B, 0x2C}; 
+
+// Structure for sending sensor data
+typedef struct {
+    char sensorType[10];  // Sensor type (e.g., LDR, DHT)
+    int numValues;        // Number of values sent
+    float values[2];      // Sensor data values
+    char sensorID[20];    // Unique sensor ID
+} SensorData;
+
+// Sensor data to send
+SensorData dataToSend;
+
+// Callback for data sent status
+void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
+    Serial.println(sendStatus == 0 ? "Packet sent successfully" : "Failed to send packet");
+}
+
+void OnDataRecv(uint8_t *mac, uint8_t *incomingData, uint8_t len) {
+    if (len &lt; 4) return;
+    if (memcmp(mac, masterAddress, 6) != 0) return;
+
+    // If master requests firmware version
+    if (strncmp((char*)incomingData, "checkversion", len) == 0) {
+        Serial.printf("Sending firmware version: '%s' (size: %d bytes)\n", FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));
+        esp_now_send(mac, (uint8_t*)FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));  
+        return;
+    }
+
+    // If receiving metadata (firmware size + total packets)
+    if (len == 12) {  
+        uint32_t receivedMagic;
+        memcpy(&amp;receivedMagic, incomingData, 4);
+
+        if (receivedMagic == 0xABCD1234) {  // Validate magic header
+            memcpy(&amp;firmwareSize, incomingData + 4, 4);
+            memcpy(&amp;totalPackets, incomingData + 8, 4);
+            receivedPackets = 0;  // Reset received packets counter
+
+            Serial.println("START PACKET RECEIVED!");
+            Serial.printf("Firmware Size: %u bytes\n", firmwareSize);
+            Serial.printf("Total Packets: %u\n", totalPackets); 
+
+            // Open firmware file for writing
+            firmwareFile = SPIFFS.open(FIRMWARE_FILE, "w");
+            if (!firmwareFile) {
+                Serial.println("ERROR: Cannot open firmware file for writing!");
+                return;
+            }
+            Serial.println("Firmware file opened for writing.");
+
+            esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+            return;
+        }
+    }
+
+    // Read packet index
+    uint32_t packetIndex;
+    memcpy(&amp;packetIndex, incomingData, 4);
+    size_t dataSize = len - 4;
+
+    // If end signal is received
+    if (packetIndex == 0xFFFFFFFF) {
+        Serial.println("Firmware transfer complete. Ready for update.");
+        updateReady = true;
+        
+        if (firmwareFile) {
+            firmwareFile.close();
+            Serial.println("Firmware file closed.");
+        }
+
+        esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+        return;
+    }
+
+    // If wrong packet sequence, ignore it
+    if (packetIndex != receivedPackets) {
+        Serial.printf("Unexpected packet %d, expected %d. Ignoring...\n", packetIndex, receivedPackets);
+        return;
+    }
+
+    // Write firmware data to SPIFFS
+    firmwareFile.write(incomingData + 4, dataSize);
+    receivedPackets++;
+
+    Serial.printf("Received packet %d, size: %d\n", packetIndex, dataSize);
+    esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+}
+
+bool applyFirmwareUpdate() {
+    // Check if firmware file exists
+    if (!SPIFFS.exists(FIRMWARE_FILE)) {
+        Serial.println("ERROR: Firmware file does not exist!");
+        return false;
+    }
+
+    // Open firmware file for reading
+    File firmwareFile = SPIFFS.open(FIRMWARE_FILE, "r");
+    if (!firmwareFile) {
+        Serial.println("ERROR: Failed to open firmware file!");
+        return false;
+    }
+
+    size_t firmwareSize = firmwareFile.size();
+    Serial.printf("Applying update, size: %d bytes\n", firmwareSize);
+
+    // Begin update process
+    if (!Update.begin(firmwareSize)) {
+        Serial.println("ERROR: Update failed to start!");
+        return false;
+    }
+
+    size_t written = Update.writeStream(firmwareFile);
+    firmwareFile.close();
+
+    // Validate firmware write
+    if (written != firmwareSize) {
+        Serial.println("ERROR: Firmware write failed!");
+        return false;
+    }
+
+    if (!Update.end()) {
+        Serial.println("ERROR: Update error!");
+        return false;
+    }
+
+    Serial.println("Update successful! Restarting...");
+    ESP.restart();
+    return true;
+}
+
+void setup() {
+    Serial.begin(115200);
+
+    WiFi.mode(WIFI_STA); // Set Wi-Fi to station mode
+
+    // Initialize DHT sensor
+    dht.begin();
+     
+    pinMode(ldrPin, INPUT);
+
+    if (!SPIFFS.begin()) {
+        Serial.println("SPIFFS mount failed! Formatting...");
+        SPIFFS.format();
+        if (!SPIFFS.begin()) {
+            Serial.println("SPIFFS mount failed again! Aborting.");
+            return;
+        }
+    }
+
+    // Initialize ESP-NOW
+    if (esp_now_init() != 0) {
+        Serial.println("ESP-NOW initialization failed!");
+        return;
+    }
+
+    esp_now_set_self_role(ESP_NOW_ROLE_SLAVE);
+    esp_now_register_recv_cb(OnDataRecv);
+    esp_now_register_send_cb(OnDataSent);
+    esp_now_add_peer(masterAddress, ESP_NOW_ROLE_CONTROLLER, 1, NULL, 0);
+
+    Serial.println("ESP-NOW Ready!");
+}
+
+void loop() {
+    // Read and send LDR data
+    int ldrValue = analogRead(ldrPin);
+    strcpy(dataToSend.sensorType, "LDR");
+    strcpy(dataToSend.sensorID, "LDR100112202428");
+    dataToSend.numValues = 1;
+    dataToSend.values[0] = ldrValue;
+
+    if (esp_now_send(masterAddress, (uint8_t *)&amp;dataToSend, sizeof(dataToSend)) == 0) {
+        Serial.printf("LDR Value Sent: %d\n", ldrValue);
+    } else {
+        Serial.println("Failed to send LDR data!");
+    }
+
+    delay(1000);
+
+    // Read and send DHT data
+    float temperature = dht.readTemperature();
+    float humidity = dht.readHumidity();
+
+    if (isnan(temperature) || isnan(humidity)) {
+        Serial.println("Failed to read from DHT sensor!");
+    } else {
+        strcpy(dataToSend.sensorType, "DHT22");
+        strcpy(dataToSend.sensorID, "DHT100112202428");
+        dataToSend.numValues = 2;
+        dataToSend.values[0] = temperature;
+        dataToSend.values[1] = humidity;
+
+        if (esp_now_send(masterAddress, (uint8_t *)&amp;dataToSend, sizeof(dataToSend)) == 0) {
+            Serial.printf("DHT Values Sent - Temperature: %.2f, Humidity: %.2f\n", temperature, humidity);
+        } else {
+            Serial.println("Failed to send DHT data!");
+        }
+    }
+
+    delay(1000);
+    
+    if (updateReady) {
+        applyFirmwareUpdate();
+    }
+
+    delay(15000);
+}</pre>
+        </div>
+
+        <h4>Connection Diagram</h4>
+        <div class="connection-diagram">
+DHT22 Connections:
+- VCC: 3.3V
+- DATA: D4 (with 4.7K pull-up resistor)
+- GND: GND
+
+LDR Connections:
+- One leg: 3.3V
+- Other leg: A0 and to GND via 10K resistor
+        </div>
+
+        <h4>Configuration Parameters</h4>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>FIRMWARE_VERSION</td>
+                <td>"1.0.0"</td>
+                <td>Current firmware version</td>
+            </tr>
+            <tr>
+                <td>masterAddress</td>
+                <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
+                <td>MAC address of master device</td>
+            </tr>
+            <tr>
+                <td>CHUNK_SIZE</td>
+                <td>240</td>
+                <td>Max payload size for ESP-NOW packets</td>
+            </tr>
+            <tr>
+                <td>Data Interval</td>
+                <td>15 seconds</td>
+                <td>Time between sensor readings</td>
+            </tr>
+        </table>
+
+        <h4>Operation Flow</h4>
+        <ol>
+            <li>Initializes DHT22 sensor and LDR</li>
+            <li>Sets up SPIFFS for firmware storage</li>
+            <li>Configures ESP-NOW communication with master</li>
+            <li>Continuously reads and sends sensor data</li>
+            <li>Handles OTA firmware updates when available</li>
+        </ol>
+
+        <div class="note">
+            <p><strong>Note:</strong> The device will automatically check for firmware updates every cycle. When an update is received, it will be stored in SPIFFS and applied before restarting.</p>
+        </div>
+
+        <div class="warning">
+            <strong>Warning:</strong> Ensure the master MAC address is correctly configured for proper communication. Incorrect MAC address will prevent data transmission and OTA updates.
+        </div>
+    </div>
+</div>
+
+
+   <!-- ACS712 Current Sensor Slave -->
+<div class="section">
+    <h2>3. ESP8266 with ACS712 Current Sensor</h2>
+    <div class="device-card">
+        <h3>Current Monitoring Node</h3>
+        <p>Measures AC current consumption and calculates power with OTA update capability.</p>
+
+        <h4>Key Features</h4>
+        <ul>
+            <li>ACS712 current sensor (20A range)</li>
+            <li>Automatic zero-current calibration</li>
+            <li>Power calculation (assuming 230V AC)</li>
+            <li>ESP-NOW communication with master</li>
+            <li>Secure OTA firmware updates</li>
+            <li>Noise filtering for low current measurements</li>
+        </ul>
+
+        <div class="code-header">
+            <h4>ACS712 Current Sensor Code</h4>
+        </div>
+        <div class="code-container">
+            <div class="code-controls">
+                <button class="btn btn-secondary toggle-code" onclick="toggleCode('acs712-code')">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                    <span class="toggle-text">Expand</span>
+                </button>
+                <button class="btn" onclick="copyToClipboard('acs712-code')">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copy
+                </button>
+            </div>
+            <input type="range" min="0" max="100" value="0" class="code-slider" id="acs712-code-slider" oninput="scrollCode('acs712-code', this.value)">
+            <pre id="acs712-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
+#include &lt;espnow.h&gt;
+#include &lt;FS.h&gt;
+#include &lt;Updater.h&gt;
+#include "ACS712.h"
+
+#define FIRMWARE_FILE "/firmware.bin"
+#define CHUNK_SIZE 240
+
+ACS712 ACS(A0, 1.035, 1023, 100);  // Pin A0, Vref, ADC max, sensitivity in mV/A
+
+size_t firmwareSize = 0;
+size_t totalPackets = 0;
+size_t receivedPackets = 0;
+bool updateReady = false;
+File firmwareFile;
+
+char FIRMWARE_VERSION[10] = "1.0.0";
+uint8_t metadata[12];
+uint8_t ackMessage = 1;
+uint8_t receiverAddress[] = {0x24, 0xdc, 0xc3, 0xae, 0x8b, 0x2c};
+
+typedef struct {
+  char sensorType[10];
+  int numValues;
+  float values[2];
+  char sensorID[20];
+} SensorData;
+
+SensorData acsData;
+
+void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
+  Serial.println(sendStatus == 0 ? "Packet sent successfully" : "Failed to send packet");
+}
+
+void OnDataRecv(uint8_t *mac, uint8_t *incomingData, uint8_t len) {
+  if (len &lt; 4) return;
+  if (memcmp(mac, receiverAddress, 6) != 0) return;
+
+  if (strncmp((char*)incomingData, "checkversion", len) == 0) {
+    Serial.printf("Sending firmware version: '%s' (size: %d bytes)\n", FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));
+    esp_now_send(mac, (uint8_t*)FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));
+    return;
+  }
+
+  if (len == sizeof(metadata)) {
+    uint32_t receivedMagic;
+    memcpy(&amp;receivedMagic, incomingData, 4);
+
+    if (receivedMagic == 0xABCD1234) {
+      memcpy(&amp;firmwareSize, incomingData + 4, 4);
+      memcpy(&amp;totalPackets, incomingData + 8, 4);
+      receivedPackets = 0;
+
+      Serial.println("START PACKET RECEIVED!");
+      Serial.printf("Firmware Size: %u bytes\n", firmwareSize);
+      Serial.printf("Total Packets: %u\n", totalPackets);
+
+      firmwareFile = SPIFFS.open(FIRMWARE_FILE, "w");
+      if (!firmwareFile) {
+        Serial.println("ERROR: Cannot open firmware file for writing!");
+        return;
+      }
+
+      Serial.println("Firmware file opened for writing.");
+      esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));
+      return;
+    }
+  }
+
+  uint32_t packetIndex;
+  memcpy(&amp;packetIndex, incomingData, 4);
+  size_t dataSize = len - 4;
+
+  if (packetIndex == 0xFFFFFFFF) {
+    Serial.println("Firmware transfer complete. Ready for update.");
+    updateReady = true;
+
+    if (firmwareFile) {
+      firmwareFile.close();
+      Serial.println("Firmware file closed.");
+    }
+
+    esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));
+    return;
+  }
+
+  if (packetIndex != receivedPackets) {
+    Serial.printf("Unexpected packet %d, expected %d. Ignoring...\n", packetIndex, receivedPackets);
+    return;
+  }
+
+  firmwareFile.write(incomingData + 4, dataSize);
+  receivedPackets++;
+
+  Serial.printf("Received packet %d, size: %d\n", packetIndex, dataSize);
+  esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));
+}
+
+bool applyFirmwareUpdate() {
+  if (!SPIFFS.exists(FIRMWARE_FILE)) {
+    Serial.println("ERROR: Firmware file does not exist!");
+    return false;
+  }
+
+  File firmwareFile = SPIFFS.open(FIRMWARE_FILE, "r");
+  if (!firmwareFile) {
+    Serial.println("ERROR: Failed to open firmware file!");
+    return false;
+  }
+
+  size_t firmwareSize = firmwareFile.size();
+  Serial.printf("Applying update, size: %d bytes\n", firmwareSize);
+
+  if (!Update.begin(firmwareSize)) {
+    Serial.println("ERROR: Update failed to start!");
+    return false;
+  }
+
+  size_t written = Update.writeStream(firmwareFile);
+  firmwareFile.close();
+
+  if (written != firmwareSize) {
+    Serial.println("ERROR: Firmware write failed!");
+    return false;
+  }
+
+  if (!Update.end()) {
+    Serial.println("ERROR: Update error!");
+    return false;
+  }
+
+  Serial.println("Update successful! Restarting...");
+  ESP.restart();
+  return true;
+}
+
+void setup() {
+  Serial.begin(115200);
+  delay(100);
+  Serial.println("ACS712 Calibrated Example");
+
+  WiFi.mode(WIFI_STA);
+  if (!SPIFFS.begin()) {
+    Serial.println("SPIFFS mount failed! Formatting...");
+    SPIFFS.format();
+    if (!SPIFFS.begin()) {
+      Serial.println("SPIFFS mount failed again! Aborting.");
+      return;
+    }
+  }
+
+  if (esp_now_init() != 0) {
+    Serial.println("Error initializing ESP-NOW");
+    return;
+  }
+
+  esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
+  esp_now_register_send_cb(OnDataSent);
+  esp_now_register_recv_cb(OnDataRecv);
+  esp_now_add_peer(receiverAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
+
+  ACS.autoMidPoint();  // Calibrate zero-current point
+  Serial.print("MidPoint: ");
+  Serial.println(ACS.getMidPoint());
+}
+
+void loop() {
+  float current_mA = ACS.mA_AC_sampling();
+
+  if (current_mA &lt; 20) current_mA = 0;  // Noise filtering
+
+  float current_A = current_mA / 1000.0;
+  float voltage = 230.0;
+  float powerFactor = 0.9;
+  float power_W = voltage * current_A * powerFactor;
+
+  strcpy(acsData.sensorType, "ACS712");
+  strcpy(acsData.sensorID, "ACS712100112202428");
+  acsData.numValues = 2;
+  acsData.values[0] = current_A;
+  acsData.values[1] = power_W;
+
+  esp_now_send(receiverAddress, (uint8_t*)&amp;acsData, sizeof(acsData));
+
+  Serial.print("Current (mA): ");
+  Serial.print(current_mA);
+  Serial.print(" | Power (W): ");
+  Serial.println(power_W);
+  Serial.println("--------------------");
+
+  if (updateReady) {
+    applyFirmwareUpdate();
+  }
+
+  delay(15000);
+}</pre>
+        </div>
+
+        <h4>Connection Diagram</h4>
+        <div class="connection-diagram">
+ACS712 Connections:
+- VCC: 5V
+- OUT: A0
+- GND: GND
+
+Current Measurement:
+- IP+ (Input Positive): Connect to power source
+- IP- (Input Negative): Connect to load
+- GND: Common ground reference
+        </div>
+
+        <h4>Configuration Parameters</h4>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>ACS712 Configuration</td>
+                <td>A0, 1.035, 1023, 100</td>
+                <td>Pin, Vref, ADC max, sensitivity (mV/A)</td>
+            </tr>
+            <tr>
+                <td>FIRMWARE_VERSION</td>
+                <td>"1.0.0"</td>
+                <td>Current firmware version</td>
+            </tr>
+            <tr>
+                <td>receiverAddress</td>
+                <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
+                <td>MAC address of master device</td>
+            </tr>
+            <tr>
+                <td>Noise Threshold</td>
+                <td>20mA</td>
+                <td>Current values below this are set to 0</td>
+            </tr>
+            <tr>
+                <td>Voltage</td>
+                <td>230V</td>
+                <td>Assumed line voltage for power calculation</td>
+            </tr>
+            <tr>
+                <td>Power Factor</td>
+                <td>0.9</td>
+                <td>Assumed power factor for power calculation</td>
+            </tr>
+        </table>
+
+        <h4>Operation Flow</h4>
+        <ol>
+            <li>Initializes and calibrates ACS712 sensor</li>
+            <li>Sets up SPIFFS for firmware storage</li>
+            <li>Configures ESP-NOW communication with master</li>
+            <li>Continuously measures current and calculates power</li>
+            <li>Sends data to master every 15 seconds</li>
+            <li>Handles OTA firmware updates when available</li>
+        </ol>
+
+        <div class="note">
+            <p><strong>Note:</strong> The ACS712 sensor requires calibration on first use. The <code>autoMidPoint()</code> function automatically calibrates the zero-current point.</p>
+        </div>
+
+        <div class="warning">
+            <strong>Warning:</strong> When measuring AC mains current, ensure proper insulation and safety measures. The ACS712 provides galvanic isolation but still requires careful handling of high voltage connections.
+        </div>
+    </div>
+</div>
+
+<!-- PIR Motion Sensor Slave -->
+<div class="section">
+    <h2>4. ESP8266 with PIR Motion Sensor</h2>
+    <div class="device-card">
+        <h3>Motion Detection Node</h3>
+        <p>Detects human presence using infrared with OTA update capability.</p>
+
+        <h4>Key Features</h4>
+        <ul>
+            <li>Passive Infrared (PIR) motion detection</li>
+            <li>Digital output (HIGH/LOW) for motion detection</li>
+            <li>ESP-NOW communication with master</li>
+            <li>Secure OTA firmware updates</li>
+            <li>15-second detection interval</li>
+            <li>Unique sensor identification</li>
+        </ul>
+
+        <div class="code-header">
+            <h4>PIR Sensor Code</h4>
+        </div>
+        <div class="code-container">
+            <div class="code-controls">
+                <button class="btn btn-secondary toggle-code" onclick="toggleCode('pir-code')">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                    <span class="toggle-text">Expand</span>
+                </button>
+                <button class="btn" onclick="copyToClipboard('pir-code')">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copy
+                </button>
+            </div>
+            <input type="range" min="0" max="100" value="0" class="code-slider" id="pir-code-slider" oninput="scrollCode('pir-code', this.value)">
+            <pre id="pir-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
+#include &lt;espnow.h&gt;
+#include &lt;FS.h&gt;
+#include &lt;Updater.h&gt;
+
+#define SENSOR_ID_PIR 1001
+#define FIRMWARE_FILE "/firmware.bin"
+#define CHUNK_SIZE 240  // ESP-NOW max payload size
+
+int pirPin = D1;
+
+uint8_t receiverAddress[] = {0x24, 0xDC, 0xC3, 0xAE, 0x8B, 0x2C};  // Receiver MAC address
+
+typedef struct {
+    char sensorType[10];  // Sensor type (e.g., LDR, DHT)
+    int numValues;        // Number of values sent
+    float values[2];      // Sensor data values
+    char sensorID[20];    // Unique sensor ID
+} SensorData;
+
+SensorData pirData;
+
+size_t firmwareSize = 0; 
+size_t totalPackets = 0;
+size_t receivedPackets = 0;
+bool updateReady = false;
+File firmwareFile;
+char FIRMWARE_VERSION[10] = "1.0.0";  // Fixed 10-byte array
+uint8_t metadata[12];
+uint8_t ackMessage = 1;  // Simple ACK response
+
+void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
+    Serial.println(sendStatus == 0 ? "Packet sent successfully" : "Failed to send packet");
+}
+
+void OnDataRecv(uint8_t *mac, uint8_t *incomingData, uint8_t len) {
+    if (len &lt; 4) return;
+    if (memcmp(mac, receiverAddress, 6) != 0) return;
+
+    // If master requests firmware version
+    if (strncmp((char*)incomingData, "checkversion", len) == 0) {
+        Serial.printf("Sending firmware version: '%s' (size: %d bytes)\n", FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));
+        esp_now_send(mac, (uint8_t*)FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));  
+        return;
+    }
+
+    // If receiving metadata (firmware size + total packets)
+    if (len == sizeof(metadata)) {  
+        uint32_t receivedMagic;
+        memcpy(&amp;receivedMagic, incomingData, 4);
+
+        if (receivedMagic == 0xABCD1234) {  // Validate magic header
+            memcpy(&amp;firmwareSize, incomingData + 4, 4);
+            memcpy(&amp;totalPackets, incomingData + 8, 4);
+            receivedPackets = 0;  // Reset received packets counter
+
+            Serial.println("START PACKET RECEIVED!");
+            Serial.printf("Firmware Size: %u bytes\n", firmwareSize);
+            Serial.printf("Total Packets: %u\n", totalPackets); 
+
+            // Open firmware file for writing
+            firmwareFile = SPIFFS.open(FIRMWARE_FILE, "w");
+            if (!firmwareFile) {
+                Serial.println("ERROR: Cannot open firmware file for writing!");
+                return;
+            }
+            Serial.println("Firmware file opened for writing.");
+
+            esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+            return;
+        }
+    }
+
+    // Read packet index
+    uint32_t packetIndex;
+    memcpy(&amp;packetIndex, incomingData, 4);
+    size_t dataSize = len - 4;
+
+    // If end signal is received
+    if (packetIndex == 0xFFFFFFFF) {
+        Serial.println("Firmware transfer complete. Ready for update.");
+        updateReady = true;
+        
+        if (firmwareFile) {
+            firmwareFile.close();
+            Serial.println("Firmware file closed.");
+        }
+
+        esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+        return;
+    }
+
+    // If wrong packet sequence, ignore it
+    if (packetIndex != receivedPackets) {
+        Serial.printf("Unexpected packet %d, expected %d. Ignoring...\n", packetIndex, receivedPackets);
+        return;
+    }
+
+    // Write firmware data to SPIFFS
+    firmwareFile.write(incomingData + 4, dataSize);
+    receivedPackets++;
+
+    Serial.printf("Received packet %d, size: %d\n", packetIndex, dataSize);
+    esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+}
+
+bool applyFirmwareUpdate() {
+    // Check if firmware file exists
+    if (!SPIFFS.exists(FIRMWARE_FILE)) {
+        Serial.println("ERROR: Firmware file does not exist!");
+        return false;
+    }
+
+    // Open firmware file for reading
+    File firmwareFile = SPIFFS.open(FIRMWARE_FILE, "r");
+    if (!firmwareFile) {
+        Serial.println("ERROR: Failed to open firmware file!");
+        return false;
+    }
+
+    size_t firmwareSize = firmwareFile.size();
+    Serial.printf("Applying update, size: %d bytes\n", firmwareSize);
+
+    // Begin update process
+    if (!Update.begin(firmwareSize)) {
+        Serial.println("ERROR: Update failed to start!");
+        return false;
+    }
+
+    size_t written = Update.writeStream(firmwareFile);
+    firmwareFile.close();
+
+    // Validate firmware write
+    if (written != firmwareSize) {
+        Serial.println("ERROR: Firmware write failed!");
+        return false;
+    }
+
+    if (!Update.end()) {
+        Serial.println("ERROR: Update error!");
+        return false;
+    }
+
+    Serial.println("Update successful! Restarting...");
+    ESP.restart();
+    return true;
+}
+
+void setup() {
+    Serial.begin(115200);
+    WiFi.mode(WIFI_STA);
+    pinMode(pirPin, INPUT);
+
+    if (!SPIFFS.begin()) {
+        Serial.println("SPIFFS mount failed! Formatting...");
+        SPIFFS.format();
+        if (!SPIFFS.begin()) {
+            Serial.println("SPIFFS mount failed again! Aborting.");
+            return;
+        }
+    }
+
+    if (esp_now_init() != 0) {
+        Serial.println("Error initializing ESP-NOW");
+        return;
+    }
+
+    esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
+    esp_now_register_send_cb(OnDataSent);
+    esp_now_register_recv_cb(OnDataRecv);
+    esp_now_add_peer(receiverAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
+
+    Serial.println("");
+    printf("Firmware Version: %s\n", FIRMWARE_VERSION);
+}
+
+void loop() {
+    int value = digitalRead(pirPin);
+    pirData.values[0] = value;
+    strcpy(pirData.sensorType, "PIR");
+    strcpy(pirData.sensorID, "PIR100112202428");
+    pirData.numValues = 1;
+
+    // Send motion detection data
+    esp_now_send(receiverAddress, (uint8_t *) &amp;pirData, sizeof(pirData));
+
+    Serial.print("Motion: ");
+    Serial.println(value == HIGH ? "Detected" : "Not Detected");
+
+    if (updateReady) {
+        applyFirmwareUpdate();
+    }
+
+    delay(15000);
+}</pre>
+        </div>
+
+        <h4>Connection Diagram</h4>
+        <div class="connection-diagram">
+PIR Sensor Connections:
+- VCC: 5V
+- OUT: D1 (Digital Input)
+- GND: GND
+
+Adjustments:
+- Time Delay: Adjust potentiometer (typically labeled "Time")
+- Sensitivity: Adjust potentiometer (typically labeled "Sens")
+- Jumper Settings: Set to single trigger (H) or retrigger (L) mode
+        </div>
+
+        <h4>Configuration Parameters</h4>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>PIR Pin</td>
+                <td>D1</td>
+                <td>Digital input pin for PIR sensor</td>
+            </tr>
+            <tr>
+                <td>FIRMWARE_VERSION</td>
+                <td>"1.0.0"</td>
+                <td>Current firmware version</td>
+            </tr>
+            <tr>
+                <td>receiverAddress</td>
+                <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
+                <td>MAC address of master device</td>
+            </tr>
+            <tr>
+                <td>Detection Interval</td>
+                <td>15 seconds</td>
+                <td>Time between motion checks</td>
+            </tr>
+            <tr>
+                <td>Sensor ID</td>
+                <td>PIR100112202428</td>
+                <td>Unique identifier for this sensor</td>
+            </tr>
+        </table>
+
+        <h4>Operation Flow</h4>
+        <ol>
+            <li>Initializes PIR sensor on digital pin D1</li>
+            <li>Sets up SPIFFS for firmware storage</li>
+            <li>Configures ESP-NOW communication with master</li>
+            <li>Continuously checks for motion detection</li>
+            <li>Sends HIGH (motion) or LOW (no motion) to master</li>
+            <li>Handles OTA firmware updates when available</li>
+        </ol>
+
+        <div class="note">
+            <p><strong>Note:</strong> The PIR sensor requires 30-60 seconds to stabilize after power-up. During this time, it may give false triggers.</p>
+        </div>
+
+        <div class="warning">
+            <strong>Warning:</strong> For best performance, avoid pointing the PIR sensor at heat sources or windows where sunlight/temperature changes might cause false triggers.
+        </div>
+    </div>
+</div>
+
+ <!-- Door/Window Sensor Slave -->
+<div class="section">
+    <h2>5. ESP8266 with Door/Window Sensors</h2>
+    <div class="device-card">
+        <h3>Contact Detection Node</h3>
+        <p>Monitors door and window open/close status with magnetic contact sensors.</p>
+
+        <h4>Key Features</h4>
+        <ul>
+            <li>Two independent contact sensors (door and window)</li>
+            <li>Digital input with pull-up resistors</li>
+            <li>ESP-NOW communication with master</li>
+            <li>Separate unique IDs for each sensor</li>
+            <li>15-second update interval</li>
+            <li>Simple open/closed status reporting</li>
+        </ul>
+
+        <div class="code-header">
+            <h4>Door/Window Sensor Code</h4>
+        </div>
+        <div class="code-container">
+            <div class="code-controls">
+                <button class="btn btn-secondary toggle-code" onclick="toggleCode('door-window-code')">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                    <span class="toggle-text">Expand</span>
+                </button>
+                <button class="btn" onclick="copyToClipboard('door-window-code')">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    Copy
+                </button>
+            </div>
+            <input type="range" min="0" max="100" value="0" class="code-slider" id="door-window-code-slider" oninput="scrollCode('door-window-code', this.value)">
+            <pre id="door-window-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
+#include &lt;espnow.h&gt;
+
+// Pin definitions
+#define DOOR_SENSOR_PIN D1
+#define WINDOW_SENSOR_PIN D3
+
+// Structure for sending sensor data
+typedef struct {
+    char sensorType[10]; // Type of sensor
+    int numValues;       // Number of values sent
+    float values[2];     // Array to hold sensor values
+    char sensorID[20];   // Unique sensor ID as a char array
+} SensorData;
+
+// Replace with the receiver's MAC address
+uint8_t receiverAddress[] = {0x24, 0xDC, 0xC3, 0xAE, 0x8B, 0x2C};
+
+// Sensor data to send
+SensorData dataToSend;
+
+// Callback for data sent status
+void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
+    Serial.print("Packet send status: ");
+    Serial.println(sendStatus == 0 ? "Success" : "Fail");
+}
+
+void setup() {
+    Serial.begin(115200);
+
+    WiFi.mode(WIFI_STA); // Set Wi-Fi to station mode
+
+    pinMode(DOOR_SENSOR_PIN, INPUT_PULLUP);
+    pinMode(WINDOW_SENSOR_PIN, INPUT_PULLUP);
+
+    // Initialize ESP-NOW
+    if (esp_now_init() != 0) {
+        Serial.println("ESP-NOW initialization failed!");
+        return;
+    }
+
+    esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
+    esp_now_register_send_cb(OnDataSent);
+
+    // Add peer device
+    if (esp_now_add_peer(receiverAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0) != 0) {
+        Serial.println("Failed to add peer!");
+        return;
+    }
+
+    Serial.println("ESP-NOW setup complete!");
+}
+
+void loop() {
+    // Read door sensor data
+    int doorStatus = digitalRead(DOOR_SENSOR_PIN);
+
+    // Prepare door data to send
+    strcpy(dataToSend.sensorType, "DOORWIN");
+    strcpy(dataToSend.sensorID, "DOORWIN100112202428"); // Unique ID for door sensor
+    dataToSend.numValues = 1;
+    dataToSend.values[0] = doorStatus; // Door status
+
+    // Send door data via ESP-NOW
+    if (esp_now_send(receiverAddress, (uint8_t *)&amp;dataToSend, sizeof(dataToSend)) == 0) {
+        Serial.printf("Door Data Sent - Door: %s\n",
+                      doorStatus == HIGH ? "Open" : "Closed");
+    } else {
+        Serial.println("Failed to send Door data!");
+    }
+
+    delay(1000); // Delay before sending window data
+
+    // Read window sensor data
+    int windowStatus = digitalRead(WINDOW_SENSOR_PIN);
+
+    // Prepare window data to send
+    strcpy(dataToSend.sensorType, "DOORWIN");
+    strcpy(dataToSend.sensorID, "DOORWIN100212202428"); // Unique ID for window sensor
+    dataToSend.numValues = 1;
+    dataToSend.values[0] = windowStatus; // Window status
+
+    // Send window data via ESP-NOW
+    if (esp_now_send(receiverAddress, (uint8_t *)&amp;dataToSend, sizeof(dataToSend)) == 0) {
+        Serial.printf("Window Data Sent - Window: %s\n",
+                      windowStatus == HIGH ? "Open" : "Closed");
+    } else {
+        Serial.println("Failed to send Window data!");
+    }
+
+    delay(15000); // Delay before next cycle
+}</pre>
+        </div>
+
+        <h4>Connection Diagram</h4>
+        <div class="connection-diagram">
+Door Sensor Connections:
+- One side: GND
+- Other side: D1 (with internal pull-up enabled)
+
+Window Sensor Connections:
+- One side: GND
+- Other side: D3 (with internal pull-up enabled)
+
+Alternative Wiring (if using external resistors):
+- Sensor side 1: GND
+- Sensor side 2: GPIO pin
+- Add 10K resistor between GPIO pin and 3.3V
+        </div>
+
+        <h4>Configuration Parameters</h4>
+        <table>
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <td>Door Sensor Pin</td>
+                <td>D1</td>
+                <td>Digital input with pull-up</td>
+            </tr>
+            <tr>
+                <td>Window Sensor Pin</td>
+                <td>D3</td>
+                <td>Digital input with pull-up</td>
+            </tr>
+            <tr>
+                <td>receiverAddress</td>
+                <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
+                <td>MAC address of master device</td>
+            </tr>
+            <tr>
+                <td>Door Sensor ID</td>
+                <td>DOORWIN100112202428</td>
+                <td>Unique identifier for door sensor</td>
+            </tr>
+            <tr>
+                <td>Window Sensor ID</td>
+                <td>DOORWIN100212202428</td>
+                <td>Unique identifier for window sensor</td>
+            </tr>
+            <tr>
+                <td>Update Interval</td>
+                <td>15 seconds</td>
+                <td>Time between status checks</td>
+            </tr>
+        </table>
+
+        <h4>Operation Flow</h4>
+        <ol>
+            <li>Initializes door and window sensors with internal pull-up resistors</li>
+            <li>Sets up ESP-NOW communication with master</li>
+            <li>Continuously checks door and window status</li>
+            <li>Sends separate messages for door and window status</li>
+            <li>Reports HIGH (open) or LOW (closed) status for each</li>
+            <li>Waits 15 seconds before next check</li>
+        </ol>
+
+        <h4>Sensor Behavior</h4>
+        <table>
+            <tr>
+                <th>State</th>
+                <th>Digital Read Value</th>
+                <th>Interpretation</th>
+            </tr>
+            <tr>
+                <td>Contact Closed</td>
+                <td>LOW</td>
+                <td>Door/Window is closed</td>
+            </tr>
+            <tr>
+                <td>Contact Open</td>
+                <td>HIGH</td>
+                <td>Door/Window is open</td>
+            </tr>
+        </table>
+
+        <div class="note">
+            <p><strong>Note:</strong> Magnetic contact sensors work by closing a circuit when the magnet is near (closed position) and opening it when apart (open position). The internal pull-up resistors ensure a clean HIGH signal when the circuit is open.</p>
+        </div>
+
+        <div class="warning">
+            <strong>Warning:</strong> For proper operation, align the magnet within 1/4 inch (6mm) of the sensor in the closed position. Test sensor alignment after installation.
+        </div>
+    </div>
+</div>
+
+    <div class="section">
+        <h2>System Integration</h2>
+        <h3>ESP-NOW Network Setup</h3>
+        <ol>
+            <li>Program all devices with their respective code</li>
+            <li>Update MAC addresses in master and slave codes</li>
+            <li>Power all devices within range (recommended &lt;50m)</li>
+            <li>Verify communication in serial monitor</li>
+        </ol>
+
+        <h3>Troubleshooting</h3>
+        <div class="note">
+            <h4>Common Issues and Solutions</h4>
+            <ul>
+                <li><strong>No Communication:</strong> 
+                    <ul>
+                        <li>Verify MAC addresses match exactly</li>
+                        <li>Ensure all devices are on the same WiFi channel</li>
+                        <li>Check power supply stability</li>
+                    </ul>
+                </li>
+                <li><strong>Inconsistent Data:</strong>
+                    <ul>
+                        <li>Add 100μF capacitors near power pins</li>
+                        <li>Verify wiring connections</li>
+                        <li>Check for WiFi interference</li>
+                    </ul>
+                </li>
+                <li><strong>Sensor Issues:</strong>
+                    <ul>
+                        <li>Verify proper sensor connections</li>
+                        <li>Recalibrate sensors according to datasheets</li>
+                        <li>Check for environmental factors affecting readings</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>Energy Optimization For Buliding - Complete Documentation</p>
+        <p>Last updated: June 2023 | Version 1.0</p>
+    </footer>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const range = document.createRange();
+            range.selectNode(codeElement);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            
+            try {
+                const successful = document.execCommand('copy');
+                const btn = event.currentTarget;
+                if (successful) {
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = `
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Copied!`;
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                    }, 2000);
+                }
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+            
+            window.getSelection().removeAllRanges();
+        }
+        
+        function toggleCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const toggleBtn = event.currentTarget;
+            const toggleText = toggleBtn.querySelector('.toggle-text');
+            const toggleIcon = toggleBtn.querySelector('svg');
+            
+            if (codeElement.classList.contains('collapsed')) {
+                codeElement.classList.remove('collapsed');
+                toggleText.textContent = 'Collapse';
+                toggleIcon.style.transform = 'rotate(180deg)';
+            } else {
+                codeElement.classList.add('collapsed');
+                toggleText.textContent = 'Expand';
+                toggleIcon.style.transform = 'rotate(0deg)';
+            }
+        }
+        
+        function scrollCode(elementId, value) {
+            const codeElement = document.getElementById(elementId);
+            const maxScroll = codeElement.scrollHeight - codeElement.clientHeight;
+            const scrollPosition = (value / 100) * maxScroll;
+            codeElement.scrollTop = scrollPosition;
+        }
+        
+        // Update sliders when code is scrolled
+        document.querySelectorAll('pre').forEach(pre => {
+            const sliderId = pre.id + '-slider';
+            const slider = document.getElementById(sliderId);
+            
+            if (slider) {
+                pre.addEventListener('scroll', () => {
+                    const maxScroll = pre.scrollHeight - pre.clientHeight;
+                    const scrollPercentage = (pre.scrollTop / maxScroll) * 100;
+                    slider.value = scrollPercentage;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
