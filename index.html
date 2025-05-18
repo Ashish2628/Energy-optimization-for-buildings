@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Energy Optimization Project - Complete Documentation</title>
     <style>
         :root {
@@ -101,6 +101,9 @@
             max-height: 500px;
             overflow-y: auto;
             transition: max-height 0.3s ease;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            word-break: break-all;
         }
         
         pre.collapsed {
@@ -189,6 +192,8 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            min-width: 44px;
+            min-height: 44px;
         }
         
         .btn:hover {
@@ -273,29 +278,214 @@
             height: 16px;
         }
         
-        @media (max-width: 768px) {
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
             body {
-                padding: 1rem;
+                padding: 1.5rem;
             }
             
             header {
-                padding: 1.5rem;
+                padding: 1.8rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            h3 {
+                font-size: 1.3rem;
             }
             
             .section {
                 padding: 1.5rem;
             }
             
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+                font-size: 15px;
+                line-height: 1.6;
+            }
+            
+            header {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+                margin: 2rem 0 1rem;
+                padding-bottom: 0.3rem;
+            }
+            
+            h3 {
+                font-size: 1.2rem;
+                margin: 1.5rem 0 0.8rem;
+            }
+            
+            .section {
+                padding: 1.2rem;
+                margin-bottom: 1.8rem;
+            }
+            
             pre {
                 padding: 1rem;
-                font-size: 0.85rem;
+                font-size: 0.8rem;
+                line-height: 1.4;
+            }
+            
+            .btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .device-card {
+                padding: 1.2rem;
+            }
+            
+            th, td {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            
+            ul, ol {
+                padding-left: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.8rem;
+            }
+            
+            header {
+                padding: 1.2rem;
+                border-radius: 6px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .section {
+                padding: 1rem;
+                border-radius: 6px;
+            }
+            
+            pre {
+                padding: 0.8rem;
+                font-size: 0.75rem;
+            }
+            
+            .connection-diagram {
+                font-size: 0.8rem;
+                padding: 0.8rem;
+            }
+            
+            .btn {
+                padding: 0.5rem 0.8rem;
+            }
+            
+            .code-controls {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            
+            .note, .warning {
+                padding: 0.8rem;
+                margin: 1rem 0;
+            }
+            
+            footer {
+                padding: 1.5rem 0.8rem;
+            }
+
+            /* Stacked table layout for very small screens */
+            table {
+                display: block;
+            }
+            
+            tr {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 1rem;
+                border-bottom: 2px solid #ddd;
+            }
+            
+            th, td {
+                display: block;
+                padding: 0.5rem;
+                text-align: right;
+            }
+            
+            th::before, td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+            }
+            
+            th {
+                display: none;
+            }
+        }
+
+        @media (max-width: 360px) {
+            body {
+                font-size: 14px;
+            }
+            
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 0.8rem;
+            }
+            
+            pre {
+                font-size: 0.7rem;
+                padding: 0.6rem;
+            }
+            
+            .btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem;
             }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Energy Optimization For Buliding</h1>
+        <h1>Energy Optimization For Building</h1>
         <p>Complete Documentation for ESP32 Master and ESP8266 Slave Devices</p>
     </header>
     
@@ -311,7 +501,8 @@
             <li>Various sensors for monitoring different aspects of energy usage</li>
         </ul>
     </div>
-    <!-- system Architecture -->
+    
+        <!-- system Architecture -->
     <div class="section">
         <h2>System Architecture</h2>
         <p>The system consists of 1 ESP32 master controller and 4 ESP8266 slave nodes with different sensors:</p>
@@ -328,7 +519,8 @@
         </ul>
         <p>All devices communicate via ESP-NOW protocol for low-latency communication.</p>
     </div>
-    <!-- installation and setup -->
+    
+        <!-- installation and setup -->
     <div class="section">
         <h2>Installation and Setup</h2>
         
@@ -1320,9 +1512,9 @@ ESP32 Pinout:
         </div>
     </div>
 
-
+ 
   <!-- LDR and DHT22 Slave -->
-<div class="section">
+    <div class="section">
     <h2>2. ESP8266 with LDR and DHT22</h2>
     <div class="device-card">
         <h3>Environment Monitoring Node</h3>
@@ -1647,468 +1839,150 @@ LDR Connections:
             <strong>Warning:</strong> Ensure the master MAC address is correctly configured for proper communication. Incorrect MAC address will prevent data transmission and OTA updates.
         </div>
     </div>
-</div>
-
+    </div>
 
    <!-- ACS712 Current Sensor Slave -->
-<div class="section">
-    <h2>3. ESP8266 with ACS712 Current Sensor</h2>
-    <div class="device-card">
-        <h3>Current Monitoring Node</h3>
-        <p>Measures AC current consumption and calculates power with OTA update capability.</p>
+    <div class="section">
+        <h2>3. ESP8266 with ACS712 Current Sensor</h2>
+        <div class="device-card">
+            <h3>Current Monitoring Node</h3>
+            <p>Measures AC current consumption and calculates power with OTA update capability.</p>
 
-        <h4>Key Features</h4>
-        <ul>
-            <li>ACS712 current sensor (20A range)</li>
-            <li>Automatic zero-current calibration</li>
-            <li>Power calculation (assuming 230V AC)</li>
-            <li>ESP-NOW communication with master</li>
-            <li>Secure OTA firmware updates</li>
-            <li>Noise filtering for low current measurements</li>
-        </ul>
+            <h4>Key Features</h4>
+            <ul>
+                <li>ACS712 current sensor (20A range)</li>
+                <li>Automatic zero-current calibration</li>
+                <li>Power calculation (assuming 230V AC)</li>
+                <li>ESP-NOW communication with master</li>
+                <li>Secure OTA firmware updates</li>
+                <li>Noise filtering for low current measurements</li>
+            </ul>
 
-        <div class="code-header">
-            <h4>ACS712 Current Sensor Code</h4>
-        </div>
-        <div class="code-container">
-            <div class="code-controls">
-                <button class="btn btn-secondary toggle-code" onclick="toggleCode('acs712-code')">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 9l6 6 6-6"/>
-                    </svg>
-                    <span class="toggle-text">Expand</span>
-                </button>
-                <button class="btn" onclick="copyToClipboard('acs712-code')">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    Copy
-                </button>
+            <div class="code-header">
+                <h4>ACS712 Current Sensor Code</h4>
             </div>
-            <input type="range" min="0" max="100" value="0" class="code-slider" id="acs712-code-slider" oninput="scrollCode('acs712-code', this.value)">
-            <pre id="acs712-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
-#include &lt;espnow.h&gt;
-#include &lt;FS.h&gt;
-#include &lt;Updater.h&gt;
-#include "ACS712.h"
+            <div class="code-container">
+                <div class="code-controls">
+                    <button class="btn btn-secondary toggle-code" onclick="toggleCode('acs712-code')">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                        <span class="toggle-text">Expand</span>
+                    </button>
+                    <button class="btn" onclick="copyToClipboard('acs712-code')">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy
+                    </button>
+                </div>
+                <input type="range" min="0" max="100" value="0" class="code-slider" id="acs712-code-slider" oninput="scrollCode('acs712-code', this.value)">
+                <pre id="acs712-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
+    #include &lt;espnow.h&gt;
+    #include &lt;FS.h&gt;
+    #include &lt;Updater.h&gt;
+    #include "ACS712.h"
 
-#define FIRMWARE_FILE "/firmware.bin"
-#define CHUNK_SIZE 240
+    #define FIRMWARE_FILE "/firmware.bin"
+    #define CHUNK_SIZE 240
 
-ACS712 ACS(A0, 1.035, 1023, 100);  // Pin A0, Vref, ADC max, sensitivity in mV/A
+    ACS712 ACS(A0, 1.035, 1023, 100);  // Pin A0, Vref, ADC max, sensitivity in mV/A
 
-size_t firmwareSize = 0;
-size_t totalPackets = 0;
-size_t receivedPackets = 0;
-bool updateReady = false;
-File firmwareFile;
+    size_t firmwareSize = 0;
+    size_t totalPackets = 0;
+    size_t receivedPackets = 0;
+    bool updateReady = false;
+    File firmwareFile;
 
-char FIRMWARE_VERSION[10] = "1.0.0";
-uint8_t metadata[12];
-uint8_t ackMessage = 1;
-uint8_t receiverAddress[] = {0x24, 0xdc, 0xc3, 0xae, 0x8b, 0x2c};
+    char FIRMWARE_VERSION[10] = "1.0.0";
+    uint8_t metadata[12];
+    uint8_t ackMessage = 1;
+    uint8_t receiverAddress[] = {0x24, 0xdc, 0xc3, 0xae, 0x8b, 0x2c};
 
-typedef struct {
-  char sensorType[10];
-  int numValues;
-  float values[2];
-  char sensorID[20];
-} SensorData;
+    typedef struct {
+    char sensorType[10];
+    int numValues;
+    float values[2];
+    char sensorID[20];
+    } SensorData;
 
-SensorData acsData;
+    SensorData acsData;
 
-void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
-  Serial.println(sendStatus == 0 ? "Packet sent successfully" : "Failed to send packet");
-}
-
-void OnDataRecv(uint8_t *mac, uint8_t *incomingData, uint8_t len) {
-  if (len &lt; 4) return;
-  if (memcmp(mac, receiverAddress, 6) != 0) return;
-
-  if (strncmp((char*)incomingData, "checkversion", len) == 0) {
-    Serial.printf("Sending firmware version: '%s' (size: %d bytes)\n", FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));
-    esp_now_send(mac, (uint8_t*)FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));
-    return;
-  }
-
-  if (len == sizeof(metadata)) {
-    uint32_t receivedMagic;
-    memcpy(&amp;receivedMagic, incomingData, 4);
-
-    if (receivedMagic == 0xABCD1234) {
-      memcpy(&amp;firmwareSize, incomingData + 4, 4);
-      memcpy(&amp;totalPackets, incomingData + 8, 4);
-      receivedPackets = 0;
-
-      Serial.println("START PACKET RECEIVED!");
-      Serial.printf("Firmware Size: %u bytes\n", firmwareSize);
-      Serial.printf("Total Packets: %u\n", totalPackets);
-
-      firmwareFile = SPIFFS.open(FIRMWARE_FILE, "w");
-      if (!firmwareFile) {
-        Serial.println("ERROR: Cannot open firmware file for writing!");
-        return;
-      }
-
-      Serial.println("Firmware file opened for writing.");
-      esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));
-      return;
-    }
-  }
-
-  uint32_t packetIndex;
-  memcpy(&amp;packetIndex, incomingData, 4);
-  size_t dataSize = len - 4;
-
-  if (packetIndex == 0xFFFFFFFF) {
-    Serial.println("Firmware transfer complete. Ready for update.");
-    updateReady = true;
-
-    if (firmwareFile) {
-      firmwareFile.close();
-      Serial.println("Firmware file closed.");
-    }
-
-    esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));
-    return;
-  }
-
-  if (packetIndex != receivedPackets) {
-    Serial.printf("Unexpected packet %d, expected %d. Ignoring...\n", packetIndex, receivedPackets);
-    return;
-  }
-
-  firmwareFile.write(incomingData + 4, dataSize);
-  receivedPackets++;
-
-  Serial.printf("Received packet %d, size: %d\n", packetIndex, dataSize);
-  esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));
-}
-
-bool applyFirmwareUpdate() {
-  if (!SPIFFS.exists(FIRMWARE_FILE)) {
-    Serial.println("ERROR: Firmware file does not exist!");
-    return false;
-  }
-
-  File firmwareFile = SPIFFS.open(FIRMWARE_FILE, "r");
-  if (!firmwareFile) {
-    Serial.println("ERROR: Failed to open firmware file!");
-    return false;
-  }
-
-  size_t firmwareSize = firmwareFile.size();
-  Serial.printf("Applying update, size: %d bytes\n", firmwareSize);
-
-  if (!Update.begin(firmwareSize)) {
-    Serial.println("ERROR: Update failed to start!");
-    return false;
-  }
-
-  size_t written = Update.writeStream(firmwareFile);
-  firmwareFile.close();
-
-  if (written != firmwareSize) {
-    Serial.println("ERROR: Firmware write failed!");
-    return false;
-  }
-
-  if (!Update.end()) {
-    Serial.println("ERROR: Update error!");
-    return false;
-  }
-
-  Serial.println("Update successful! Restarting...");
-  ESP.restart();
-  return true;
-}
-
-void setup() {
-  Serial.begin(115200);
-  delay(100);
-  Serial.println("ACS712 Calibrated Example");
-
-  WiFi.mode(WIFI_STA);
-  if (!SPIFFS.begin()) {
-    Serial.println("SPIFFS mount failed! Formatting...");
-    SPIFFS.format();
-    if (!SPIFFS.begin()) {
-      Serial.println("SPIFFS mount failed again! Aborting.");
-      return;
-    }
-  }
-
-  if (esp_now_init() != 0) {
-    Serial.println("Error initializing ESP-NOW");
-    return;
-  }
-
-  esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
-  esp_now_register_send_cb(OnDataSent);
-  esp_now_register_recv_cb(OnDataRecv);
-  esp_now_add_peer(receiverAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
-
-  ACS.autoMidPoint();  // Calibrate zero-current point
-  Serial.print("MidPoint: ");
-  Serial.println(ACS.getMidPoint());
-}
-
-void loop() {
-  float current_mA = ACS.mA_AC_sampling();
-
-  if (current_mA &lt; 20) current_mA = 0;  // Noise filtering
-
-  float current_A = current_mA / 1000.0;
-  float voltage = 230.0;
-  float powerFactor = 0.9;
-  float power_W = voltage * current_A * powerFactor;
-
-  strcpy(acsData.sensorType, "ACS712");
-  strcpy(acsData.sensorID, "ACS712100112202428");
-  acsData.numValues = 2;
-  acsData.values[0] = current_A;
-  acsData.values[1] = power_W;
-
-  esp_now_send(receiverAddress, (uint8_t*)&amp;acsData, sizeof(acsData));
-
-  Serial.print("Current (mA): ");
-  Serial.print(current_mA);
-  Serial.print(" | Power (W): ");
-  Serial.println(power_W);
-  Serial.println("--------------------");
-
-  if (updateReady) {
-    applyFirmwareUpdate();
-  }
-
-  delay(15000);
-}</pre>
-        </div>
-
-        <h4>Connection Diagram</h4>
-        <div class="connection-diagram">
-ACS712 Connections:
-- VCC: 5V
-- OUT: A0
-- GND: GND
-
-Current Measurement:
-- IP+ (Input Positive): Connect to power source
-- IP- (Input Negative): Connect to load
-- GND: Common ground reference
-        </div>
-
-        <h4>Configuration Parameters</h4>
-        <table>
-            <tr>
-                <th>Parameter</th>
-                <th>Value</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>ACS712 Configuration</td>
-                <td>A0, 1.035, 1023, 100</td>
-                <td>Pin, Vref, ADC max, sensitivity (mV/A)</td>
-            </tr>
-            <tr>
-                <td>FIRMWARE_VERSION</td>
-                <td>"1.0.0"</td>
-                <td>Current firmware version</td>
-            </tr>
-            <tr>
-                <td>receiverAddress</td>
-                <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
-                <td>MAC address of master device</td>
-            </tr>
-            <tr>
-                <td>Noise Threshold</td>
-                <td>20mA</td>
-                <td>Current values below this are set to 0</td>
-            </tr>
-            <tr>
-                <td>Voltage</td>
-                <td>230V</td>
-                <td>Assumed line voltage for power calculation</td>
-            </tr>
-            <tr>
-                <td>Power Factor</td>
-                <td>0.9</td>
-                <td>Assumed power factor for power calculation</td>
-            </tr>
-        </table>
-
-        <h4>Operation Flow</h4>
-        <ol>
-            <li>Initializes and calibrates ACS712 sensor</li>
-            <li>Sets up SPIFFS for firmware storage</li>
-            <li>Configures ESP-NOW communication with master</li>
-            <li>Continuously measures current and calculates power</li>
-            <li>Sends data to master every 15 seconds</li>
-            <li>Handles OTA firmware updates when available</li>
-        </ol>
-
-        <div class="note">
-            <p><strong>Note:</strong> The ACS712 sensor requires calibration on first use. The <code>autoMidPoint()</code> function automatically calibrates the zero-current point.</p>
-        </div>
-
-        <div class="warning">
-            <strong>Warning:</strong> When measuring AC mains current, ensure proper insulation and safety measures. The ACS712 provides galvanic isolation but still requires careful handling of high voltage connections.
-        </div>
-    </div>
-</div>
-
-<!-- PIR Motion Sensor Slave -->
-<div class="section">
-    <h2>4. ESP8266 with PIR Motion Sensor</h2>
-    <div class="device-card">
-        <h3>Motion Detection Node</h3>
-        <p>Detects human presence using infrared with OTA update capability.</p>
-
-        <h4>Key Features</h4>
-        <ul>
-            <li>Passive Infrared (PIR) motion detection</li>
-            <li>Digital output (HIGH/LOW) for motion detection</li>
-            <li>ESP-NOW communication with master</li>
-            <li>Secure OTA firmware updates</li>
-            <li>15-second detection interval</li>
-            <li>Unique sensor identification</li>
-        </ul>
-
-        <div class="code-header">
-            <h4>PIR Sensor Code</h4>
-        </div>
-        <div class="code-container">
-            <div class="code-controls">
-                <button class="btn btn-secondary toggle-code" onclick="toggleCode('pir-code')">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 9l6 6 6-6"/>
-                    </svg>
-                    <span class="toggle-text">Expand</span>
-                </button>
-                <button class="btn" onclick="copyToClipboard('pir-code')">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    Copy
-                </button>
-            </div>
-            <input type="range" min="0" max="100" value="0" class="code-slider" id="pir-code-slider" oninput="scrollCode('pir-code', this.value)">
-            <pre id="pir-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
-#include &lt;espnow.h&gt;
-#include &lt;FS.h&gt;
-#include &lt;Updater.h&gt;
-
-#define SENSOR_ID_PIR 1001
-#define FIRMWARE_FILE "/firmware.bin"
-#define CHUNK_SIZE 240  // ESP-NOW max payload size
-
-int pirPin = D1;
-
-uint8_t receiverAddress[] = {0x24, 0xDC, 0xC3, 0xAE, 0x8B, 0x2C};  // Receiver MAC address
-
-typedef struct {
-    char sensorType[10];  // Sensor type (e.g., LDR, DHT)
-    int numValues;        // Number of values sent
-    float values[2];      // Sensor data values
-    char sensorID[20];    // Unique sensor ID
-} SensorData;
-
-SensorData pirData;
-
-size_t firmwareSize = 0; 
-size_t totalPackets = 0;
-size_t receivedPackets = 0;
-bool updateReady = false;
-File firmwareFile;
-char FIRMWARE_VERSION[10] = "1.0.0";  // Fixed 10-byte array
-uint8_t metadata[12];
-uint8_t ackMessage = 1;  // Simple ACK response
-
-void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
+    void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
     Serial.println(sendStatus == 0 ? "Packet sent successfully" : "Failed to send packet");
-}
+    }
 
-void OnDataRecv(uint8_t *mac, uint8_t *incomingData, uint8_t len) {
+    void OnDataRecv(uint8_t *mac, uint8_t *incomingData, uint8_t len) {
     if (len &lt; 4) return;
     if (memcmp(mac, receiverAddress, 6) != 0) return;
 
-    // If master requests firmware version
     if (strncmp((char*)incomingData, "checkversion", len) == 0) {
         Serial.printf("Sending firmware version: '%s' (size: %d bytes)\n", FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));
-        esp_now_send(mac, (uint8_t*)FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));  
+        esp_now_send(mac, (uint8_t*)FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));
         return;
     }
 
-    // If receiving metadata (firmware size + total packets)
-    if (len == sizeof(metadata)) {  
+    if (len == sizeof(metadata)) {
         uint32_t receivedMagic;
         memcpy(&amp;receivedMagic, incomingData, 4);
 
-        if (receivedMagic == 0xABCD1234) {  // Validate magic header
-            memcpy(&amp;firmwareSize, incomingData + 4, 4);
-            memcpy(&amp;totalPackets, incomingData + 8, 4);
-            receivedPackets = 0;  // Reset received packets counter
+        if (receivedMagic == 0xABCD1234) {
+        memcpy(&amp;firmwareSize, incomingData + 4, 4);
+        memcpy(&amp;totalPackets, incomingData + 8, 4);
+        receivedPackets = 0;
 
-            Serial.println("START PACKET RECEIVED!");
-            Serial.printf("Firmware Size: %u bytes\n", firmwareSize);
-            Serial.printf("Total Packets: %u\n", totalPackets); 
+        Serial.println("START PACKET RECEIVED!");
+        Serial.printf("Firmware Size: %u bytes\n", firmwareSize);
+        Serial.printf("Total Packets: %u\n", totalPackets);
 
-            // Open firmware file for writing
-            firmwareFile = SPIFFS.open(FIRMWARE_FILE, "w");
-            if (!firmwareFile) {
-                Serial.println("ERROR: Cannot open firmware file for writing!");
-                return;
-            }
-            Serial.println("Firmware file opened for writing.");
-
-            esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+        firmwareFile = SPIFFS.open(FIRMWARE_FILE, "w");
+        if (!firmwareFile) {
+            Serial.println("ERROR: Cannot open firmware file for writing!");
             return;
+        }
+
+        Serial.println("Firmware file opened for writing.");
+        esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));
+        return;
         }
     }
 
-    // Read packet index
     uint32_t packetIndex;
     memcpy(&amp;packetIndex, incomingData, 4);
     size_t dataSize = len - 4;
 
-    // If end signal is received
     if (packetIndex == 0xFFFFFFFF) {
         Serial.println("Firmware transfer complete. Ready for update.");
         updateReady = true;
-        
+
         if (firmwareFile) {
-            firmwareFile.close();
-            Serial.println("Firmware file closed.");
+        firmwareFile.close();
+        Serial.println("Firmware file closed.");
         }
 
-        esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+        esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));
         return;
     }
 
-    // If wrong packet sequence, ignore it
     if (packetIndex != receivedPackets) {
         Serial.printf("Unexpected packet %d, expected %d. Ignoring...\n", packetIndex, receivedPackets);
         return;
     }
 
-    // Write firmware data to SPIFFS
     firmwareFile.write(incomingData + 4, dataSize);
     receivedPackets++;
 
     Serial.printf("Received packet %d, size: %d\n", packetIndex, dataSize);
-    esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
-}
+    esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));
+    }
 
-bool applyFirmwareUpdate() {
-    // Check if firmware file exists
+    bool applyFirmwareUpdate() {
     if (!SPIFFS.exists(FIRMWARE_FILE)) {
         Serial.println("ERROR: Firmware file does not exist!");
         return false;
     }
 
-    // Open firmware file for reading
     File firmwareFile = SPIFFS.open(FIRMWARE_FILE, "r");
     if (!firmwareFile) {
         Serial.println("ERROR: Failed to open firmware file!");
@@ -2118,7 +1992,6 @@ bool applyFirmwareUpdate() {
     size_t firmwareSize = firmwareFile.size();
     Serial.printf("Applying update, size: %d bytes\n", firmwareSize);
 
-    // Begin update process
     if (!Update.begin(firmwareSize)) {
         Serial.println("ERROR: Update failed to start!");
         return false;
@@ -2127,7 +2000,6 @@ bool applyFirmwareUpdate() {
     size_t written = Update.writeStream(firmwareFile);
     firmwareFile.close();
 
-    // Validate firmware write
     if (written != firmwareSize) {
         Serial.println("ERROR: Firmware write failed!");
         return false;
@@ -2141,19 +2013,20 @@ bool applyFirmwareUpdate() {
     Serial.println("Update successful! Restarting...");
     ESP.restart();
     return true;
-}
+    }
 
-void setup() {
+    void setup() {
     Serial.begin(115200);
-    WiFi.mode(WIFI_STA);
-    pinMode(pirPin, INPUT);
+    delay(100);
+    Serial.println("ACS712 Calibrated Example");
 
+    WiFi.mode(WIFI_STA);
     if (!SPIFFS.begin()) {
         Serial.println("SPIFFS mount failed! Formatting...");
         SPIFFS.format();
         if (!SPIFFS.begin()) {
-            Serial.println("SPIFFS mount failed again! Aborting.");
-            return;
+        Serial.println("SPIFFS mount failed again! Aborting.");
+        return;
         }
     }
 
@@ -2167,323 +2040,643 @@ void setup() {
     esp_now_register_recv_cb(OnDataRecv);
     esp_now_add_peer(receiverAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
 
-    Serial.println("");
-    printf("Firmware Version: %s\n", FIRMWARE_VERSION);
-}
+    ACS.autoMidPoint();  // Calibrate zero-current point
+    Serial.print("MidPoint: ");
+    Serial.println(ACS.getMidPoint());
+    }
 
-void loop() {
-    int value = digitalRead(pirPin);
-    pirData.values[0] = value;
-    strcpy(pirData.sensorType, "PIR");
-    strcpy(pirData.sensorID, "PIR100112202428");
-    pirData.numValues = 1;
+    void loop() {
+    float current_mA = ACS.mA_AC_sampling();
 
-    // Send motion detection data
-    esp_now_send(receiverAddress, (uint8_t *) &amp;pirData, sizeof(pirData));
+    if (current_mA &lt; 20) current_mA = 0;  // Noise filtering
 
-    Serial.print("Motion: ");
-    Serial.println(value == HIGH ? "Detected" : "Not Detected");
+    float current_A = current_mA / 1000.0;
+    float voltage = 230.0;
+    float powerFactor = 0.9;
+    float power_W = voltage * current_A * powerFactor;
+
+    strcpy(acsData.sensorType, "ACS712");
+    strcpy(acsData.sensorID, "ACS712100112202428");
+    acsData.numValues = 2;
+    acsData.values[0] = current_A;
+    acsData.values[1] = power_W;
+
+    esp_now_send(receiverAddress, (uint8_t*)&amp;acsData, sizeof(acsData));
+
+    Serial.print("Current (mA): ");
+    Serial.print(current_mA);
+    Serial.print(" | Power (W): ");
+    Serial.println(power_W);
+    Serial.println("--------------------");
 
     if (updateReady) {
         applyFirmwareUpdate();
     }
 
     delay(15000);
-}</pre>
-        </div>
-
-        <h4>Connection Diagram</h4>
-        <div class="connection-diagram">
-PIR Sensor Connections:
-- VCC: 5V
-- OUT: D1 (Digital Input)
-- GND: GND
-
-Adjustments:
-- Time Delay: Adjust potentiometer (typically labeled "Time")
-- Sensitivity: Adjust potentiometer (typically labeled "Sens")
-- Jumper Settings: Set to single trigger (H) or retrigger (L) mode
-        </div>
-
-        <h4>Configuration Parameters</h4>
-        <table>
-            <tr>
-                <th>Parameter</th>
-                <th>Value</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>PIR Pin</td>
-                <td>D1</td>
-                <td>Digital input pin for PIR sensor</td>
-            </tr>
-            <tr>
-                <td>FIRMWARE_VERSION</td>
-                <td>"1.0.0"</td>
-                <td>Current firmware version</td>
-            </tr>
-            <tr>
-                <td>receiverAddress</td>
-                <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
-                <td>MAC address of master device</td>
-            </tr>
-            <tr>
-                <td>Detection Interval</td>
-                <td>15 seconds</td>
-                <td>Time between motion checks</td>
-            </tr>
-            <tr>
-                <td>Sensor ID</td>
-                <td>PIR100112202428</td>
-                <td>Unique identifier for this sensor</td>
-            </tr>
-        </table>
-
-        <h4>Operation Flow</h4>
-        <ol>
-            <li>Initializes PIR sensor on digital pin D1</li>
-            <li>Sets up SPIFFS for firmware storage</li>
-            <li>Configures ESP-NOW communication with master</li>
-            <li>Continuously checks for motion detection</li>
-            <li>Sends HIGH (motion) or LOW (no motion) to master</li>
-            <li>Handles OTA firmware updates when available</li>
-        </ol>
-
-        <div class="note">
-            <p><strong>Note:</strong> The PIR sensor requires 30-60 seconds to stabilize after power-up. During this time, it may give false triggers.</p>
-        </div>
-
-        <div class="warning">
-            <strong>Warning:</strong> For best performance, avoid pointing the PIR sensor at heat sources or windows where sunlight/temperature changes might cause false triggers.
-        </div>
-    </div>
-</div>
-
- <!-- Door/Window Sensor Slave -->
-<div class="section">
-    <h2>5. ESP8266 with Door/Window Sensors</h2>
-    <div class="device-card">
-        <h3>Contact Detection Node</h3>
-        <p>Monitors door and window open/close status with magnetic contact sensors.</p>
-
-        <h4>Key Features</h4>
-        <ul>
-            <li>Two independent contact sensors (door and window)</li>
-            <li>Digital input with pull-up resistors</li>
-            <li>ESP-NOW communication with master</li>
-            <li>Separate unique IDs for each sensor</li>
-            <li>15-second update interval</li>
-            <li>Simple open/closed status reporting</li>
-        </ul>
-
-        <div class="code-header">
-            <h4>Door/Window Sensor Code</h4>
-        </div>
-        <div class="code-container">
-            <div class="code-controls">
-                <button class="btn btn-secondary toggle-code" onclick="toggleCode('door-window-code')">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 9l6 6 6-6"/>
-                    </svg>
-                    <span class="toggle-text">Expand</span>
-                </button>
-                <button class="btn" onclick="copyToClipboard('door-window-code')">
-                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    Copy
-                </button>
+    }</pre>
             </div>
-            <input type="range" min="0" max="100" value="0" class="code-slider" id="door-window-code-slider" oninput="scrollCode('door-window-code', this.value)">
-            <pre id="door-window-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
-#include &lt;espnow.h&gt;
 
-// Pin definitions
-#define DOOR_SENSOR_PIN D1
-#define WINDOW_SENSOR_PIN D3
+            <h4>Connection Diagram</h4>
+            <div class="connection-diagram">
+    ACS712 Connections:
+    - VCC: 5V
+    - OUT: A0
+    - GND: GND
 
-// Structure for sending sensor data
-typedef struct {
-    char sensorType[10]; // Type of sensor
-    int numValues;       // Number of values sent
-    float values[2];     // Array to hold sensor values
-    char sensorID[20];   // Unique sensor ID as a char array
-} SensorData;
+    Current Measurement:
+    - IP+ (Input Positive): Connect to power source
+    - IP- (Input Negative): Connect to load
+    - GND: Common ground reference
+            </div>
 
-// Replace with the receiver's MAC address
-uint8_t receiverAddress[] = {0x24, 0xDC, 0xC3, 0xAE, 0x8B, 0x2C};
+            <h4>Configuration Parameters</h4>
+            <table>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>ACS712 Configuration</td>
+                    <td>A0, 1.035, 1023, 100</td>
+                    <td>Pin, Vref, ADC max, sensitivity (mV/A)</td>
+                </tr>
+                <tr>
+                    <td>FIRMWARE_VERSION</td>
+                    <td>"1.0.0"</td>
+                    <td>Current firmware version</td>
+                </tr>
+                <tr>
+                    <td>receiverAddress</td>
+                    <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
+                    <td>MAC address of master device</td>
+                </tr>
+                <tr>
+                    <td>Noise Threshold</td>
+                    <td>20mA</td>
+                    <td>Current values below this are set to 0</td>
+                </tr>
+                <tr>
+                    <td>Voltage</td>
+                    <td>230V</td>
+                    <td>Assumed line voltage for power calculation</td>
+                </tr>
+                <tr>
+                    <td>Power Factor</td>
+                    <td>0.9</td>
+                    <td>Assumed power factor for power calculation</td>
+                </tr>
+            </table>
 
-// Sensor data to send
-SensorData dataToSend;
+            <h4>Operation Flow</h4>
+            <ol>
+                <li>Initializes and calibrates ACS712 sensor</li>
+                <li>Sets up SPIFFS for firmware storage</li>
+                <li>Configures ESP-NOW communication with master</li>
+                <li>Continuously measures current and calculates power</li>
+                <li>Sends data to master every 15 seconds</li>
+                <li>Handles OTA firmware updates when available</li>
+            </ol>
 
-// Callback for data sent status
-void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
-    Serial.print("Packet send status: ");
-    Serial.println(sendStatus == 0 ? "Success" : "Fail");
-}
+            <div class="note">
+                <p><strong>Note:</strong> The ACS712 sensor requires calibration on first use. The <code>autoMidPoint()</code> function automatically calibrates the zero-current point.</p>
+            </div>
 
-void setup() {
-    Serial.begin(115200);
-
-    WiFi.mode(WIFI_STA); // Set Wi-Fi to station mode
-
-    pinMode(DOOR_SENSOR_PIN, INPUT_PULLUP);
-    pinMode(WINDOW_SENSOR_PIN, INPUT_PULLUP);
-
-    // Initialize ESP-NOW
-    if (esp_now_init() != 0) {
-        Serial.println("ESP-NOW initialization failed!");
-        return;
-    }
-
-    esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
-    esp_now_register_send_cb(OnDataSent);
-
-    // Add peer device
-    if (esp_now_add_peer(receiverAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0) != 0) {
-        Serial.println("Failed to add peer!");
-        return;
-    }
-
-    Serial.println("ESP-NOW setup complete!");
-}
-
-void loop() {
-    // Read door sensor data
-    int doorStatus = digitalRead(DOOR_SENSOR_PIN);
-
-    // Prepare door data to send
-    strcpy(dataToSend.sensorType, "DOORWIN");
-    strcpy(dataToSend.sensorID, "DOORWIN100112202428"); // Unique ID for door sensor
-    dataToSend.numValues = 1;
-    dataToSend.values[0] = doorStatus; // Door status
-
-    // Send door data via ESP-NOW
-    if (esp_now_send(receiverAddress, (uint8_t *)&amp;dataToSend, sizeof(dataToSend)) == 0) {
-        Serial.printf("Door Data Sent - Door: %s\n",
-                      doorStatus == HIGH ? "Open" : "Closed");
-    } else {
-        Serial.println("Failed to send Door data!");
-    }
-
-    delay(1000); // Delay before sending window data
-
-    // Read window sensor data
-    int windowStatus = digitalRead(WINDOW_SENSOR_PIN);
-
-    // Prepare window data to send
-    strcpy(dataToSend.sensorType, "DOORWIN");
-    strcpy(dataToSend.sensorID, "DOORWIN100212202428"); // Unique ID for window sensor
-    dataToSend.numValues = 1;
-    dataToSend.values[0] = windowStatus; // Window status
-
-    // Send window data via ESP-NOW
-    if (esp_now_send(receiverAddress, (uint8_t *)&amp;dataToSend, sizeof(dataToSend)) == 0) {
-        Serial.printf("Window Data Sent - Window: %s\n",
-                      windowStatus == HIGH ? "Open" : "Closed");
-    } else {
-        Serial.println("Failed to send Window data!");
-    }
-
-    delay(15000); // Delay before next cycle
-}</pre>
-        </div>
-
-        <h4>Connection Diagram</h4>
-        <div class="connection-diagram">
-Door Sensor Connections:
-- One side: GND
-- Other side: D1 (with internal pull-up enabled)
-
-Window Sensor Connections:
-- One side: GND
-- Other side: D3 (with internal pull-up enabled)
-
-Alternative Wiring (if using external resistors):
-- Sensor side 1: GND
-- Sensor side 2: GPIO pin
-- Add 10K resistor between GPIO pin and 3.3V
-        </div>
-
-        <h4>Configuration Parameters</h4>
-        <table>
-            <tr>
-                <th>Parameter</th>
-                <th>Value</th>
-                <th>Description</th>
-            </tr>
-            <tr>
-                <td>Door Sensor Pin</td>
-                <td>D1</td>
-                <td>Digital input with pull-up</td>
-            </tr>
-            <tr>
-                <td>Window Sensor Pin</td>
-                <td>D3</td>
-                <td>Digital input with pull-up</td>
-            </tr>
-            <tr>
-                <td>receiverAddress</td>
-                <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
-                <td>MAC address of master device</td>
-            </tr>
-            <tr>
-                <td>Door Sensor ID</td>
-                <td>DOORWIN100112202428</td>
-                <td>Unique identifier for door sensor</td>
-            </tr>
-            <tr>
-                <td>Window Sensor ID</td>
-                <td>DOORWIN100212202428</td>
-                <td>Unique identifier for window sensor</td>
-            </tr>
-            <tr>
-                <td>Update Interval</td>
-                <td>15 seconds</td>
-                <td>Time between status checks</td>
-            </tr>
-        </table>
-
-        <h4>Operation Flow</h4>
-        <ol>
-            <li>Initializes door and window sensors with internal pull-up resistors</li>
-            <li>Sets up ESP-NOW communication with master</li>
-            <li>Continuously checks door and window status</li>
-            <li>Sends separate messages for door and window status</li>
-            <li>Reports HIGH (open) or LOW (closed) status for each</li>
-            <li>Waits 15 seconds before next check</li>
-        </ol>
-
-        <h4>Sensor Behavior</h4>
-        <table>
-            <tr>
-                <th>State</th>
-                <th>Digital Read Value</th>
-                <th>Interpretation</th>
-            </tr>
-            <tr>
-                <td>Contact Closed</td>
-                <td>LOW</td>
-                <td>Door/Window is closed</td>
-            </tr>
-            <tr>
-                <td>Contact Open</td>
-                <td>HIGH</td>
-                <td>Door/Window is open</td>
-            </tr>
-        </table>
-
-        <div class="note">
-            <p><strong>Note:</strong> Magnetic contact sensors work by closing a circuit when the magnet is near (closed position) and opening it when apart (open position). The internal pull-up resistors ensure a clean HIGH signal when the circuit is open.</p>
-        </div>
-
-        <div class="warning">
-            <strong>Warning:</strong> For proper operation, align the magnet within 1/4 inch (6mm) of the sensor in the closed position. Test sensor alignment after installation.
+            <div class="warning">
+                <strong>Warning:</strong> When measuring AC mains current, ensure proper insulation and safety measures. The ACS712 provides galvanic isolation but still requires careful handling of high voltage connections.
+            </div>
         </div>
     </div>
-</div>
 
+   <!-- PIR Motion Sensor Slave -->
+    <div class="section">
+        <h2>4. ESP8266 with PIR Motion Sensor</h2>
+        <div class="device-card">
+            <h3>Motion Detection Node</h3>
+            <p>Detects human presence using infrared with OTA update capability.</p>
+
+            <h4>Key Features</h4>
+            <ul>
+                <li>Passive Infrared (PIR) motion detection</li>
+                <li>Digital output (HIGH/LOW) for motion detection</li>
+                <li>ESP-NOW communication with master</li>
+                <li>Secure OTA firmware updates</li>
+                <li>15-second detection interval</li>
+                <li>Unique sensor identification</li>
+            </ul>
+
+            <div class="code-header">
+                <h4>PIR Sensor Code</h4>
+            </div>
+            <div class="code-container">
+                <div class="code-controls">
+                    <button class="btn btn-secondary toggle-code" onclick="toggleCode('pir-code')">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                        <span class="toggle-text">Expand</span>
+                    </button>
+                    <button class="btn" onclick="copyToClipboard('pir-code')">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy
+                    </button>
+                </div>
+                <input type="range" min="0" max="100" value="0" class="code-slider" id="pir-code-slider" oninput="scrollCode('pir-code', this.value)">
+                <pre id="pir-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
+    #include &lt;espnow.h&gt;
+    #include &lt;FS.h&gt;
+    #include &lt;Updater.h&gt;
+
+    #define SENSOR_ID_PIR 1001
+    #define FIRMWARE_FILE "/firmware.bin"
+    #define CHUNK_SIZE 240  // ESP-NOW max payload size
+
+    int pirPin = D1;
+
+    uint8_t receiverAddress[] = {0x24, 0xDC, 0xC3, 0xAE, 0x8B, 0x2C};  // Receiver MAC address
+
+    typedef struct {
+        char sensorType[10];  // Sensor type (e.g., LDR, DHT)
+        int numValues;        // Number of values sent
+        float values[2];      // Sensor data values
+        char sensorID[20];    // Unique sensor ID
+    } SensorData;
+
+    SensorData pirData;
+
+    size_t firmwareSize = 0; 
+    size_t totalPackets = 0;
+    size_t receivedPackets = 0;
+    bool updateReady = false;
+    File firmwareFile;
+    char FIRMWARE_VERSION[10] = "1.0.0";  // Fixed 10-byte array
+    uint8_t metadata[12];
+    uint8_t ackMessage = 1;  // Simple ACK response
+
+    void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
+        Serial.println(sendStatus == 0 ? "Packet sent successfully" : "Failed to send packet");
+    }
+
+    void OnDataRecv(uint8_t *mac, uint8_t *incomingData, uint8_t len) {
+        if (len &lt; 4) return;
+        if (memcmp(mac, receiverAddress, 6) != 0) return;
+
+        // If master requests firmware version
+        if (strncmp((char*)incomingData, "checkversion", len) == 0) {
+            Serial.printf("Sending firmware version: '%s' (size: %d bytes)\n", FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));
+            esp_now_send(mac, (uint8_t*)FIRMWARE_VERSION, sizeof(FIRMWARE_VERSION));  
+            return;
+        }
+
+        // If receiving metadata (firmware size + total packets)
+        if (len == sizeof(metadata)) {  
+            uint32_t receivedMagic;
+            memcpy(&amp;receivedMagic, incomingData, 4);
+
+            if (receivedMagic == 0xABCD1234) {  // Validate magic header
+                memcpy(&amp;firmwareSize, incomingData + 4, 4);
+                memcpy(&amp;totalPackets, incomingData + 8, 4);
+                receivedPackets = 0;  // Reset received packets counter
+
+                Serial.println("START PACKET RECEIVED!");
+                Serial.printf("Firmware Size: %u bytes\n", firmwareSize);
+                Serial.printf("Total Packets: %u\n", totalPackets); 
+
+                // Open firmware file for writing
+                firmwareFile = SPIFFS.open(FIRMWARE_FILE, "w");
+                if (!firmwareFile) {
+                    Serial.println("ERROR: Cannot open firmware file for writing!");
+                    return;
+                }
+                Serial.println("Firmware file opened for writing.");
+
+                esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+                return;
+            }
+        }
+
+        // Read packet index
+        uint32_t packetIndex;
+        memcpy(&amp;packetIndex, incomingData, 4);
+        size_t dataSize = len - 4;
+
+        // If end signal is received
+        if (packetIndex == 0xFFFFFFFF) {
+            Serial.println("Firmware transfer complete. Ready for update.");
+            updateReady = true;
+            
+            if (firmwareFile) {
+                firmwareFile.close();
+                Serial.println("Firmware file closed.");
+            }
+
+            esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+            return;
+        }
+
+        // If wrong packet sequence, ignore it
+        if (packetIndex != receivedPackets) {
+            Serial.printf("Unexpected packet %d, expected %d. Ignoring...\n", packetIndex, receivedPackets);
+            return;
+        }
+
+        // Write firmware data to SPIFFS
+        firmwareFile.write(incomingData + 4, dataSize);
+        receivedPackets++;
+
+        Serial.printf("Received packet %d, size: %d\n", packetIndex, dataSize);
+        esp_now_send(mac, &amp;ackMessage, sizeof(ackMessage));  // Send ACK
+    }
+
+    bool applyFirmwareUpdate() {
+        // Check if firmware file exists
+        if (!SPIFFS.exists(FIRMWARE_FILE)) {
+            Serial.println("ERROR: Firmware file does not exist!");
+            return false;
+        }
+
+        // Open firmware file for reading
+        File firmwareFile = SPIFFS.open(FIRMWARE_FILE, "r");
+        if (!firmwareFile) {
+            Serial.println("ERROR: Failed to open firmware file!");
+            return false;
+        }
+
+        size_t firmwareSize = firmwareFile.size();
+        Serial.printf("Applying update, size: %d bytes\n", firmwareSize);
+
+        // Begin update process
+        if (!Update.begin(firmwareSize)) {
+            Serial.println("ERROR: Update failed to start!");
+            return false;
+        }
+
+        size_t written = Update.writeStream(firmwareFile);
+        firmwareFile.close();
+
+        // Validate firmware write
+        if (written != firmwareSize) {
+            Serial.println("ERROR: Firmware write failed!");
+            return false;
+        }
+
+        if (!Update.end()) {
+            Serial.println("ERROR: Update error!");
+            return false;
+        }
+
+        Serial.println("Update successful! Restarting...");
+        ESP.restart();
+        return true;
+    }
+
+    void setup() {
+        Serial.begin(115200);
+        WiFi.mode(WIFI_STA);
+        pinMode(pirPin, INPUT);
+
+        if (!SPIFFS.begin()) {
+            Serial.println("SPIFFS mount failed! Formatting...");
+            SPIFFS.format();
+            if (!SPIFFS.begin()) {
+                Serial.println("SPIFFS mount failed again! Aborting.");
+                return;
+            }
+        }
+
+        if (esp_now_init() != 0) {
+            Serial.println("Error initializing ESP-NOW");
+            return;
+        }
+
+        esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
+        esp_now_register_send_cb(OnDataSent);
+        esp_now_register_recv_cb(OnDataRecv);
+        esp_now_add_peer(receiverAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0);
+
+        Serial.println("");
+        printf("Firmware Version: %s\n", FIRMWARE_VERSION);
+    }
+
+    void loop() {
+        int value = digitalRead(pirPin);
+        pirData.values[0] = value;
+        strcpy(pirData.sensorType, "PIR");
+        strcpy(pirData.sensorID, "PIR100112202428");
+        pirData.numValues = 1;
+
+        // Send motion detection data
+        esp_now_send(receiverAddress, (uint8_t *) &amp;pirData, sizeof(pirData));
+
+        Serial.print("Motion: ");
+        Serial.println(value == HIGH ? "Detected" : "Not Detected");
+
+        if (updateReady) {
+            applyFirmwareUpdate();
+        }
+
+        delay(15000);
+    }</pre>
+            </div>
+
+            <h4>Connection Diagram</h4>
+            <div class="connection-diagram">
+    PIR Sensor Connections:
+    - VCC: 5V
+    - OUT: D1 (Digital Input)
+    - GND: GND
+
+    Adjustments:
+    - Time Delay: Adjust potentiometer (typically labeled "Time")
+    - Sensitivity: Adjust potentiometer (typically labeled "Sens")
+    - Jumper Settings: Set to single trigger (H) or retrigger (L) mode
+            </div>
+
+            <h4>Configuration Parameters</h4>
+            <table>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>PIR Pin</td>
+                    <td>D1</td>
+                    <td>Digital input pin for PIR sensor</td>
+                </tr>
+                <tr>
+                    <td>FIRMWARE_VERSION</td>
+                    <td>"1.0.0"</td>
+                    <td>Current firmware version</td>
+                </tr>
+                <tr>
+                    <td>receiverAddress</td>
+                    <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
+                    <td>MAC address of master device</td>
+                </tr>
+                <tr>
+                    <td>Detection Interval</td>
+                    <td>15 seconds</td>
+                    <td>Time between motion checks</td>
+                </tr>
+                <tr>
+                    <td>Sensor ID</td>
+                    <td>PIR100112202428</td>
+                    <td>Unique identifier for this sensor</td>
+                </tr>
+            </table>
+
+            <h4>Operation Flow</h4>
+            <ol>
+                <li>Initializes PIR sensor on digital pin D1</li>
+                <li>Sets up SPIFFS for firmware storage</li>
+                <li>Configures ESP-NOW communication with master</li>
+                <li>Continuously checks for motion detection</li>
+                <li>Sends HIGH (motion) or LOW (no motion) to master</li>
+                <li>Handles OTA firmware updates when available</li>
+            </ol>
+
+            <div class="note">
+                <p><strong>Note:</strong> The PIR sensor requires 30-60 seconds to stabilize after power-up. During this time, it may give false triggers.</p>
+            </div>
+
+            <div class="warning">
+                <strong>Warning:</strong> For best performance, avoid pointing the PIR sensor at heat sources or windows where sunlight/temperature changes might cause false triggers.
+            </div>
+        </div>
+    </div>
+
+    <!-- Door/Window Sensor Slave -->
+    <div class="section">
+        <h2>5. ESP8266 with Door/Window Sensors</h2>
+        <div class="device-card">
+            <h3>Contact Detection Node</h3>
+            <p>Monitors door and window open/close status with magnetic contact sensors.</p>
+
+            <h4>Key Features</h4>
+            <ul>
+                <li>Two independent contact sensors (door and window)</li>
+                <li>Digital input with pull-up resistors</li>
+                <li>ESP-NOW communication with master</li>
+                <li>Separate unique IDs for each sensor</li>
+                <li>15-second update interval</li>
+                <li>Simple open/closed status reporting</li>
+            </ul>
+
+            <div class="code-header">
+                <h4>Door/Window Sensor Code</h4>
+            </div>
+            <div class="code-container">
+                <div class="code-controls">
+                    <button class="btn btn-secondary toggle-code" onclick="toggleCode('door-window-code')">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9l6 6 6-6"/>
+                        </svg>
+                        <span class="toggle-text">Expand</span>
+                    </button>
+                    <button class="btn" onclick="copyToClipboard('door-window-code')">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        Copy
+                    </button>
+                </div>
+                <input type="range" min="0" max="100" value="0" class="code-slider" id="door-window-code-slider" oninput="scrollCode('door-window-code', this.value)">
+                <pre id="door-window-code" class="collapsed">#include &lt;ESP8266WiFi.h&gt;
+    #include &lt;espnow.h&gt;
+
+    // Pin definitions
+    #define DOOR_SENSOR_PIN D1
+    #define WINDOW_SENSOR_PIN D3
+
+    // Structure for sending sensor data
+    typedef struct {
+        char sensorType[10]; // Type of sensor
+        int numValues;       // Number of values sent
+        float values[2];     // Array to hold sensor values
+        char sensorID[20];   // Unique sensor ID as a char array
+    } SensorData;
+
+    // Replace with the receiver's MAC address
+    uint8_t receiverAddress[] = {0x24, 0xDC, 0xC3, 0xAE, 0x8B, 0x2C};
+
+    // Sensor data to send
+    SensorData dataToSend;
+
+    // Callback for data sent status
+    void OnDataSent(uint8_t *mac_addr, uint8_t sendStatus) {
+        Serial.print("Packet send status: ");
+        Serial.println(sendStatus == 0 ? "Success" : "Fail");
+    }
+
+    void setup() {
+        Serial.begin(115200);
+
+        WiFi.mode(WIFI_STA); // Set Wi-Fi to station mode
+
+        pinMode(DOOR_SENSOR_PIN, INPUT_PULLUP);
+        pinMode(WINDOW_SENSOR_PIN, INPUT_PULLUP);
+
+        // Initialize ESP-NOW
+        if (esp_now_init() != 0) {
+            Serial.println("ESP-NOW initialization failed!");
+            return;
+        }
+
+        esp_now_set_self_role(ESP_NOW_ROLE_CONTROLLER);
+        esp_now_register_send_cb(OnDataSent);
+
+        // Add peer device
+        if (esp_now_add_peer(receiverAddress, ESP_NOW_ROLE_SLAVE, 1, NULL, 0) != 0) {
+            Serial.println("Failed to add peer!");
+            return;
+        }
+
+        Serial.println("ESP-NOW setup complete!");
+    }
+
+    void loop() {
+        // Read door sensor data
+        int doorStatus = digitalRead(DOOR_SENSOR_PIN);
+
+        // Prepare door data to send
+        strcpy(dataToSend.sensorType, "DOORWIN");
+        strcpy(dataToSend.sensorID, "DOORWIN100112202428"); // Unique ID for door sensor
+        dataToSend.numValues = 1;
+        dataToSend.values[0] = doorStatus; // Door status
+
+        // Send door data via ESP-NOW
+        if (esp_now_send(receiverAddress, (uint8_t *)&amp;dataToSend, sizeof(dataToSend)) == 0) {
+            Serial.printf("Door Data Sent - Door: %s\n",
+                        doorStatus == HIGH ? "Open" : "Closed");
+        } else {
+            Serial.println("Failed to send Door data!");
+        }
+
+        delay(1000); // Delay before sending window data
+
+        // Read window sensor data
+        int windowStatus = digitalRead(WINDOW_SENSOR_PIN);
+
+        // Prepare window data to send
+        strcpy(dataToSend.sensorType, "DOORWIN");
+        strcpy(dataToSend.sensorID, "DOORWIN100212202428"); // Unique ID for window sensor
+        dataToSend.numValues = 1;
+        dataToSend.values[0] = windowStatus; // Window status
+
+        // Send window data via ESP-NOW
+        if (esp_now_send(receiverAddress, (uint8_t *)&amp;dataToSend, sizeof(dataToSend)) == 0) {
+            Serial.printf("Window Data Sent - Window: %s\n",
+                        windowStatus == HIGH ? "Open" : "Closed");
+        } else {
+            Serial.println("Failed to send Window data!");
+        }
+
+        delay(15000); // Delay before next cycle
+    }</pre>
+            </div>
+
+            <h4>Connection Diagram</h4>
+            <div class="connection-diagram">
+    Door Sensor Connections:
+    - One side: GND
+    - Other side: D1 (with internal pull-up enabled)
+
+    Window Sensor Connections:
+    - One side: GND
+    - Other side: D3 (with internal pull-up enabled)
+
+    Alternative Wiring (if using external resistors):
+    - Sensor side 1: GND
+    - Sensor side 2: GPIO pin
+    - Add 10K resistor between GPIO pin and 3.3V
+            </div>
+
+            <h4>Configuration Parameters</h4>
+            <table>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Door Sensor Pin</td>
+                    <td>D1</td>
+                    <td>Digital input with pull-up</td>
+                </tr>
+                <tr>
+                    <td>Window Sensor Pin</td>
+                    <td>D3</td>
+                    <td>Digital input with pull-up</td>
+                </tr>
+                <tr>
+                    <td>receiverAddress</td>
+                    <td>0x24,0xDC,0xC3,0xAE,0x8B,0x2C</td>
+                    <td>MAC address of master device</td>
+                </tr>
+                <tr>
+                    <td>Door Sensor ID</td>
+                    <td>DOORWIN100112202428</td>
+                    <td>Unique identifier for door sensor</td>
+                </tr>
+                <tr>
+                    <td>Window Sensor ID</td>
+                    <td>DOORWIN100212202428</td>
+                    <td>Unique identifier for window sensor</td>
+                </tr>
+                <tr>
+                    <td>Update Interval</td>
+                    <td>15 seconds</td>
+                    <td>Time between status checks</td>
+                </tr>
+            </table>
+
+            <h4>Operation Flow</h4>
+            <ol>
+                <li>Initializes door and window sensors with internal pull-up resistors</li>
+                <li>Sets up ESP-NOW communication with master</li>
+                <li>Continuously checks door and window status</li>
+                <li>Sends separate messages for door and window status</li>
+                <li>Reports HIGH (open) or LOW (closed) status for each</li>
+                <li>Waits 15 seconds before next check</li>
+            </ol>
+
+            <h4>Sensor Behavior</h4>
+            <table>
+                <tr>
+                    <th>State</th>
+                    <th>Digital Read Value</th>
+                    <th>Interpretation</th>
+                </tr>
+                <tr>
+                    <td>Contact Closed</td>
+                    <td>LOW</td>
+                    <td>Door/Window is closed</td>
+                </tr>
+                <tr>
+                    <td>Contact Open</td>
+                    <td>HIGH</td>
+                    <td>Door/Window is open</td>
+                </tr>
+            </table>
+
+            <div class="note">
+                <p><strong>Note:</strong> Magnetic contact sensors work by closing a circuit when the magnet is near (closed position) and opening it when apart (open position). The internal pull-up resistors ensure a clean HIGH signal when the circuit is open.</p>
+            </div>
+
+            <div class="warning">
+                <strong>Warning:</strong> For proper operation, align the magnet within 1/4 inch (6mm) of the sensor in the closed position. Test sensor alignment after installation.
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 8. System Integration -->
     <div class="section">
         <h2>System Integration</h2>
         <h3>ESP-NOW Network Setup</h3>
@@ -2523,9 +2716,10 @@ Alternative Wiring (if using external resistors):
         </div>
     </div>
 
+
     <footer>
-        <p>Energy Optimization For Buliding - Complete Documentation</p>
-        <p>Last updated: June 2023 | Version 1.0</p>
+        <p>Energy Optimization For Building - Complete Documentation</p>
+        <p>Last updated: May 2025 | Version 1.0</p>
     </footer>
 
     <script>
